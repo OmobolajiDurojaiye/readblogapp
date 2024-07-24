@@ -1,0 +1,32 @@
+{% extends 'users/categoriesPageBase.html' %} {% block title %}Conservation{%
+endblock title %} {% block categoryHead %}Conservation{% endblock categoryHead
+%} {% block content %}
+<div class="heading">
+  <h1>Conservation Articles</h1>
+</div>
+
+<div class="content">
+  {% for post in posts %}
+  <div class="catCard">
+    <div class="catCardImage">
+      <img
+        src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+        alt="{{ post.title }}"
+      />
+    </div>
+    <div class="catDesc">
+      <a
+        href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+      >
+        <div class="catDescTitle">
+          <h2>{{ post.title }}</h2>
+        </div>
+        <div class="catDescDesc">
+          <p>{{ post.description }}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

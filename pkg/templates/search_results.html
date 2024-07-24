@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/search.css') }}"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <a href="/" class="home-link">Go to homepage</a>
+        <h1>
+          Search Results for <span style="color: #66fcf1"> "{{ query }}" </span>
+        </h1>
+      </nav>
+    </header>
+    <main>
+      <section class="search-results">
+        {% if posts %}
+        <div class="posts-list">
+          {% for post in posts %}
+          <div class="post-item">
+            <a
+              href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+              class="post-link"
+            >
+              <h2>{{ post.title }}</h2>
+            </a>
+            <p class="post-description">{{ post.description }}</p>
+            <p class="post-date">{{ post.created_at.strftime('%Y-%m-%d') }}</p>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-results">
+          No results found for
+          <span style="color: #0b0c10"> "{{ query }}" </span>
+        </p>
+        {% endif %}
+      </section>
+    </main>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h3>About Rēadmire</h3>
+          <p>
+            Rēadmire is a dynamic blog web application for readers who seek and
+            appreciate quality content. Discover thoughtful articles and
+            insightful writing that you'll admire and enjoy. Join our community
+            of passionate readers today.
+          </p>
+          <div class="socials">
+            <a href="#" aria-label="Facebook">
+              <img
+                src="{{url_for('static', filename='icons/facebook.png')}}"
+                alt="Facebook"
+              />
+            </a>
+            <a href="#" aria-label="Twitter">
+              <img
+                src="{{url_for('static', filename='icons/twitter.png')}}"
+                alt="Twitter"
+              />
+            </a>
+            <a href="#" aria-label="Instagram">
+              <img
+                src="{{url_for('static', filename='icons/instagram.png')}}"
+                alt="Instagram"
+              />
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <img
+                src="{{url_for('static', filename='icons/linkedin.png')}}"
+                alt="LinkedIn"
+              />
+            </a>
+          </div>
+        </div>
+        <div class="footer-section links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/email.png')}}"
+                alt="Email"
+              />
+              <a href="mailto:support@readmire.com">support@readmire.com</a>
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/phone.png')}}"
+                alt="Phone"
+              />
+              +234-915-5029-959
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/address.png')}}"
+                alt="Address"
+              />
+              3 Nile Street, Abuja, Nigeria
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Rēadmire. All rights reserved.</p>
+    </div>
+  </body>
+</html>

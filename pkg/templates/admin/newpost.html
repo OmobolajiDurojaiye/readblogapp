@@ -1,0 +1,205 @@
+{% extends 'admin/index.html' %} {% block content %}
+<!-- partial -->
+<!--motion sickness solution - bubble-->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">Add New Post</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">New</a></li>
+          <li class="breadcrumb-item active" aria-current="page">New Post</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <form
+          action="{{ url_for('save_new_post') }}"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <div class="form-group">
+            <label for="cover_image">Cover Image</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="cover_image"
+              name="cover_image"
+            />
+          </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="article_content">Article Content</label>
+            <textarea
+              class="form-control"
+              id="article_content"
+              name="article_content"
+              rows="10"
+              required
+            ></textarea>
+          </div>
+          <div class="categoryButtons">
+            <button type="button" class="health">Health</button>
+            <button type="button" class="conservation">Conservation</button>
+            <button type="button" class="general">General</button>
+            <button type="button" class="food">Food</button>
+            <button type="button" class="technical">Technical</button>
+          </div>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <input
+              type="text"
+              class="form-control"
+              id="category"
+              name="category"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="status" name="status" required>
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              class="form-control"
+              id="description"
+              name="description"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="youtube_link">YouTube Link</label>
+            <input
+              type="url"
+              class="form-control"
+              id="youtube_link"
+              name="youtube_link"
+              placeholder="https://www.youtube.com/watch?v=example"
+            />
+          </div>
+
+          <div class="categoryButtons">
+            <button type="button" class="wave">Wave</button>
+            <button type="button" class="fire">Fire</button>
+            <button type="button" class="forest">Forest</button>
+            <button type="button" class="green">Green</button>
+            <button type="button" class="digital">Digital</button>
+            <button type="button" class="purple">Purple</button>
+            <button type="button" class="gold">Gold</button>
+            <button type="button" class="dna">DNA</button>
+            <button type="button" class="drug">Drug</button>
+          </div>
+          <div class="form-group">
+            <label for="video_name">Video Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="video_name"
+              name="video_name"
+              placeholder="Enter video name (e.g., wave, fire)"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace("article_content");
+
+  const categoryInput = document.getElementById("category");
+  const health = document.querySelector(".health");
+  const conservation = document.querySelector(".conservation");
+  const general = document.querySelector(".general");
+  const food = document.querySelector(".food");
+  const technical = document.querySelector(".technical");
+
+  /*video*/
+  const videoName = document.getElementById("video_name");
+  const wave = document.querySelector(".wave");
+  const purple = document.querySelector(".purple");
+  const digital = document.querySelector(".digital");
+  const fire = document.querySelector(".fire");
+  const forest = document.querySelector(".forest");
+  const green = document.querySelector(".green");
+  const gold = document.querySelector(".gold");
+  const dna = document.querySelector(".dna");
+  const drug = document.querySelector(".drug");
+
+  health.addEventListener("click", function () {
+    categoryInput.value = "health";
+  });
+
+  conservation.addEventListener("click", function () {
+    categoryInput.value = "conservation";
+  });
+
+  technical.addEventListener("click", function () {
+    categoryInput.value = "technical";
+  });
+
+  food.addEventListener("click", function () {
+    categoryInput.value = "food";
+  });
+
+  general.addEventListener("click", function () {
+    categoryInput.value = "general";
+  });
+
+  /*video*/
+  wave.addEventListener("click", function () {
+    videoName.value = "wave";
+  });
+
+  digital.addEventListener("click", function () {
+    videoName.value = "digital";
+  });
+
+  fire.addEventListener("click", function () {
+    videoName.value = "fire";
+  });
+
+  forest.addEventListener("click", function () {
+    videoName.value = "forest";
+  });
+
+  green.addEventListener("click", function () {
+    videoName.value = "green";
+  });
+
+  purple.addEventListener("click", function () {
+    videoName.value = "purple";
+  });
+
+  gold.addEventListener("click", function () {
+    videoName.value = "gold";
+  });
+
+  dna.addEventListener("click", function () {
+    videoName.value = "dna";
+  });
+
+  drug.addEventListener("click", function () {
+    videoName.value = "drug";
+  });
+</script>
+{% endblock content %}

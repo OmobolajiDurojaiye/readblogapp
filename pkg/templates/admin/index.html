@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Rēadmire Admin</title>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/adminstyle.css')}}" />
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/adminExtra.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/classes.css')}}" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div class="flashMessage">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+    </div>
+    <div class="container-scroller">
+      <nav
+        class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+      >
+        <div
+          class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start"
+        >
+          <!--Readmirelogo here-->
+          <a class="navbar-brand brand-logo" href="/admin-dashboard/">
+            Rēadmire
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          
+          <div class="search-field d-none d-md-block">
+            <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input
+                  type="text"
+                  class="form-control bg-transparent border-0"
+                  placeholder="Search projects"
+                />
+              </div>
+            </form>
+          </div>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="profileDropdown"
+                href="#"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <div class="nav-profile-img">
+                  <!--my image here-->
+                  <img src="{{url_for('static', filename='Images/profile.png')}}" alt="image" />
+                  <span class="availability-status online"></span>
+                </div>
+                <div class="nav-profile-text">
+                  <p class="mb-1 text-black">Omobolaji Durojaiye</p>
+                </div>
+              </a>
+              <div
+                class="dropdown-menu navbar-dropdown"
+                aria-labelledby="profileDropdown"
+              >
+                <a class="dropdown-item" href="/logout">
+                  <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-image">
+                  <!--my imgae here-->
+                  <img src="{{url_for('static', filename='Images/profile.png')}}" alt="profile" />
+                  <span class="login-status online"></span>
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="font-weight-bold mb-2">Omobolaji Durojaiye</span>
+                  <span class="text-secondary text-small">CEO / Writer</span>
+                </div>
+                <i
+                  class="mdi mdi-bookmark-check text-success nav-profile-badge"
+                ></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin-dashboard/">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-bs-toggle="collapse"
+                href="#forms"
+                aria-expanded="false"
+                aria-controls="forms"
+              >
+                <span class="menu-title">Add New Post</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+              <div class="collapse" id="forms">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin/admin/new-post/"
+                      >Add New Post Page</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-bs-toggle="collapse"
+                href="#tables"
+                aria-expanded="false"
+                aria-controls="tables"
+              >
+                <span class="menu-title">Manage Articles</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+              <div class="collapse" id="tables">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin/manage-articles/"
+                      >Manage Articles Page</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            {#<li class="nav-item">
+              <a class="nav-link" href="/admin/update-articles/">
+                <span class="menu-title">Update Article</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>#}
+
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/send-announcement/">
+                <span class="menu-title">Send Announcement</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        {%block content%}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span
+                  class="page-title-icon bg-gradient-primary text-white me-2"
+                >
+                  <i class="mdi mdi-home"></i>
+                </span>
+                Dashboard
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview
+                    <i
+                      class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"
+                    ></i>
+                  </li>
+                </ul>
+              </nav>
+
+            </div>
+            <div class="row">
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute" />#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of articles
+                      <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ total_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute"/>#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of Conservation articles
+                      <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ conservation_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute"/>#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of Health articles
+                      <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ health_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute"/>#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of Technical articles
+                      <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ technical_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute"/>#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of General articles
+                      <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ general_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    {#<img src="{{ url_for('static', filename='assets/images/dashboard/circle.svg') }}" class="card-img-absolute"/>#}
+                    <h4 class="font-weight-normal mb-3">
+                      Number of Food articles
+                      <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ food_articles }}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+        {%endblock content%}
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{{url_for('static', filename='assets/vendors/js/vendor.bundle.base.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+    <!-- endinject -->
+  </body>
+</html>

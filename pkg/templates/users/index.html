@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical artices, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye" />
+    <meta name="author" content="Adeniyi Samuel" />
+    <title>Rēadmire - Insightful Blogs and articles</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/style.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/classes.css')}}"
+      type="text/css"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <section class="head">
+      <header>
+        <div class="logo">
+          <div class="logoImg">
+            <img
+              src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}"
+              alt=""
+            />
+          </div>
+
+          <div class="logoName">
+            <p>
+              <span class="letter1">R</span>
+              <span class="letter2">ē</span>
+              <span class="letter3">a</span>
+              <span class="letter4">d</span>
+              <span class="letter5">m</span>
+              <span class="letter6">i</span>
+              <span class="letter7">r</span>
+              <span class="letter8">e</span>
+            </p>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="">Home</a></li>
+            <li class="dropdown">
+              <p
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                class="categoriesButton"
+              >
+                Categories
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-caret-down-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                  />
+                </svg>
+              </p>
+              <div class="categories hidden">
+                <div class="catContainer">
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/technical.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName"><a href="/technical/">Technical</a></div>
+                </div>
+                <div class="catContainer">
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/conservation.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName">
+                    <a href="/conservation/">Conservation</a>
+                  </div>
+                </div>
+                <div class="catContainer">
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/health.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName"><a href="/health/">Health</a></div>
+                </div>
+                <div class="catContainer">
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/food.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName"><a href="/food/">Food</a></div>
+                </div>
+                <div class="catContainer">
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/general.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName"><a href="/general/">General</a></div>
+                </div>
+              </div>
+            </li>
+            <li><a href="">About</a></li>
+            <li><button id="contactButton">Contact</button></li>
+          </ul>
+        </nav>
+
+        <!-- Modal -->
+        <div id="contactModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Readmire</h2>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit">Send</button>
+            </form>
+            <div class="contact-info">
+              <h3>Follow Us</h3>
+              <div class="social-media">
+                <a href="https://twitter.com/readmire" target="_blank">X</a>
+                <a href="https://facebook.com/readmire" target="_blank"
+                  >Facebook</a
+                >
+                <a href="https://instagram.com/readmire" target="_blank"
+                  >Instagram</a
+                >
+              </div>
+              <h3>Basic Contact Info</h3>
+              <p>Email: contact@readmire.com</p>
+              <p>Phone: +234-915-5029-959</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <form action="{{ url_for('search') }}" method="GET" id="searchForm">
+        {#<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />#}
+        <input
+          type="text"
+          name="query"
+          placeholder="Search articles..."
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      <section class="trendingPost">
+        <div class="postTitleDesc">
+          <div class="trendingContainer">
+            <p><span class="fire-emoji">🔥</span>Trending</p>
+          </div>
+          <div class="trendTitle">
+            <a
+              href="{{ url_for('contentPage', title=trending_post.title.replace(' ', '-')) }}"
+            >
+              <h2>{{ trending_post.title }}</h2>
+            </a>
+          </div>
+          <div class="trendDesc">
+            <p>{{ trending_post.description }}</p>
+          </div>
+        </div>
+        <div class="postBannerImg">
+          <img
+            src="{{ url_for('static', filename='uploads/' + trending_post.cover_image_url) }}"
+            alt="{{ trending_post.title }}"
+          />
+        </div>
+      </section>
+    </section>
+
+    <section class="catSection">
+      <section class="recentPosts">
+        <div class="sectionHeads">
+          <h3>Conservation</h3>
+          <div class="viewMore">
+            <a href="">View More</a>
+          </div>
+        </div>
+
+        <div class="sectionBody general">
+          {% for post in conservation_posts %}
+          <div class="post-box">
+            <img
+              src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+              alt="Article 1"
+            />
+            <h3>
+              <a
+                href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+                >{{ post.title }}</a
+              >
+            </h3>
+            <p>{{ post.created_at.strftime('%Y-%m-%d') }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="technical">
+        <div class="sectionHeads">
+          <h3>Technical</h3>
+          <div class="viewMore">
+            <a href="">View More</a>
+          </div>
+        </div>
+
+        <div class="sectionBody technicalSlop">
+          {% for post in technical_posts %}
+          <div class="card">
+            <img
+              class="cover-image"
+              src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+              alt=""
+            />
+            <h2 class="title">
+              <a
+                href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+                >{{ post.title }}</a
+              >
+            </h2>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="health">
+        <div class="sectionHeads">
+          <h3>Trending / Health</h3>
+          <div class="viewMore">
+            <a href="">View More</a>
+          </div>
+        </div>
+
+        <div class="sectionBody healthSlop">
+          <div class="blog-card large">
+            <div class="overlay"></div>
+            <img
+              src="{{ url_for('static', filename='uploads/' + trending_post.cover_image_url) }}"
+              alt=""
+              class="blog-cover-image"
+            />
+            <a
+              href="{{ url_for('contentPage', title=trending_post.title.replace(' ', '-')) }}"
+            >
+              <div class="blog-title">{{ trending_post.title }}</div>
+              <div class="date">
+                {{ trending_post.created_at.strftime('%Y-%m-%d') }}
+              </div>
+            </a>
+          </div>
+          <div class="right-grid">
+            {% for post in health_posts %}
+            <div class="blog-card small">
+              <div class="overlay"></div>
+              <img
+                src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+                alt=""
+                class="blog-cover-image"
+              />
+              <a
+                href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+              >
+                <div class="blog-title">{{ post.title }}</div>
+                <div class="date">
+                  {{ post.created_at.strftime('%Y-%m-%d') }}
+                </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="food">
+        <div class="sectionHeads">
+          <h3>Food</h3>
+          <div class="viewMore">
+            <a href="">View More</a>
+          </div>
+        </div>
+
+        <div class="sectionBody foodSlop">
+          {% for post in food_posts %}
+          <div class="article-box">
+            <img
+              src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+              alt="Article 1"
+            />
+            <div class="article-content">
+              <a
+                href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+                >{{ post.title }}</a
+              >
+              {#
+              <p class="date">{{ post.created_at.strftime('%Y-%m-%d') }}</p>
+              #}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </section>
+
+    <section class="subscribe">
+      <div class="subscription-container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get the latest article updates directly to your inbox.</p>
+        <form
+          id="subscription-form"
+          action="{{ url_for('subscribe') }}"
+          method="POST"
+        >
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h3>About Rēadmire</h3>
+          <p>
+            Rēadmire is a dynamic blog web application for readers who seek and
+            appreciate quality content. Discover thoughtful articles and
+            insightful writing that you'll admire and enjoy. Join our community
+            of passionate readers today.
+          </p>
+          <div class="socials">
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/facebook.png')}}"
+                alt="Facebook"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/twitter.jpg')}}"
+                alt="Twitter"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/instagram.png')}}"
+                alt="Instagram"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/linkedin.png')}}"
+                alt="LinkedIn"
+            /></a>
+          </div>
+        </div>
+        <div class="footer-section links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/email.png')}}"
+                alt="Email"
+              />
+              support@readmire.com
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/phone.png')}}"
+                alt="Phone"
+              />
+              +234-915-5029-959
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/address.png')}}"
+                alt="Address"
+              />
+              3 Nile Street, Abuja, Nigeria
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Rēadmire. All rights reserved.</p>
+    </div>
+
+    <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
+  </body>
+</html>

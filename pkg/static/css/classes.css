@@ -1,0 +1,17 @@
+.hidden {
+  display: none;
+}
+
+.flashMessage {
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
+  background: #0b0c10;
+  color: #fff;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #66fcf1;
+  z-index: 999;
+}

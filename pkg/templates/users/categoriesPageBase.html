@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical articles, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye" />
+    <title>{%block title%}{%endblock title%} | Rēadmire</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/categoriesPageBase.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/classes.css')}}"
+      type="text/css"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}"
+          alt="Rēadmire Logo"
+        />
+        <div class="logoName">
+          <p>Rēadmire</p>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li class="dropdown">
+            <p class="categoriesButton">
+              Categories
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-caret-down-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+                />
+              </svg>
+            </p>
+            <div class="categories hidden">
+              <div class="catContainer">
+                <div class="catImage">
+                  <img
+                    src="{{url_for('static', filename='icons/technical.png')}}"
+                    alt=""
+                  />
+                </div>
+                <div class="catName">
+                  <a href="/technical/">Technical</a>
+                </div>
+              </div>
+              <div class="catContainer">
+                <div class="catImage">
+                  <img
+                    src="{{url_for('static', filename='icons/conservation.png')}}"
+                    alt=""
+                  />
+                </div>
+                <div class="catName">
+                  <a href="/conservation/">Conservation</a>
+                </div>
+              </div>
+              <div class="catContainer">
+                <div class="catImage">
+                  <img
+                    src="{{url_for('static', filename='icons/health.png')}}"
+                    alt=""
+                  />
+                </div>
+                <div class="catName">
+                  <a href="/health/">Health</a>
+                </div>
+              </div>
+              <div class="catContainer">
+                <div class="catImage">
+                  <img
+                    src="{{url_for('static', filename='icons/food.png')}}"
+                    alt=""
+                  />
+                </div>
+                <div class="catName">
+                  <a href="/food/">Food</a>
+                </div>
+              </div>
+              <div class="catContainer">
+                <div class="catImage">
+                  <img
+                    src="{{url_for('static', filename='icons/general.png')}}"
+                    alt=""
+                  />
+                </div>
+                <div class="catName">
+                  <a href="/general/">General</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="/">Home</a></li>
+        </ul>
+      </nav>
+      {#<button onclick="toggleDarkMode()" style="color: #fff">
+        Toggle Dark Mode</button
+      >#}
+    </header>
+
+    <section class="container">
+      {#
+      <form action="{{ url_for('search') }}" method="GET" id="searchForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input
+          type="text"
+          name="query"
+          placeholder="Search articles..."
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+      #} {%block content%}
+      <div class="Catheading">
+        <h1>{%block categoryHead%} {%endblock categoryHead%}</h1>
+      </div>
+      <div class="content">
+        <div class="catCard">
+          <div class="catCardImage">
+            <img
+              src="{{url_for('static', filename='Images/ana.jpg')}}"
+              alt=""
+            />
+          </div>
+          <div class="catDesc">
+            <a href="">
+              <div class="catDescTitle">
+                <h2>The Human Anatomy</h2>
+              </div>
+              <div class="catDescDesc">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+                  nisi optio voluptate libero nemo unde blanditiis, inventore
+                  nobis! Error, necessitatibus?
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="catCard">
+          <div class="catCardImage">
+            <img
+              src="{{url_for('static', filename='Images/ana.jpg')}}"
+              alt=""
+            />
+          </div>
+          <div class="catDesc">
+            <a href="">
+              <div class="catDescTitle">
+                <h2>The Human Anatomy</h2>
+              </div>
+              <div class="catDescDesc">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+                  nisi optio voluptate libero nemo unde blanditiis, inventore
+                  nobis! Error, necessitatibus?
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="catCard">
+          <div class="catCardImage">
+            <img
+              src="{{url_for('static', filename='Images/ana.jpg')}}"
+              alt=""
+            />
+          </div>
+          <div class="catDesc">
+            <a href="">
+              <div class="catDescTitle">
+                <h2>The Human Anatomy</h2>
+              </div>
+              <div class="catDescDesc">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+                  nisi optio voluptate libero nemo unde blanditiis, inventore
+                  nobis! Error, necessitatibus?
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="catCard">
+          <div class="catCardImage">
+            <img
+              src="{{url_for('static', filename='Images/ana.jpg')}}"
+              alt=""
+            />
+          </div>
+          <div class="catDesc">
+            <a href="">
+              <div class="catDescTitle">
+                <h2>The Human Anatomy</h2>
+              </div>
+              <div class="catDescDesc">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+                  nisi optio voluptate libero nemo unde blanditiis, inventore
+                  nobis! Error, necessitatibus?
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="otherCategories">
+        <a href="/conservation/"> Conservation </a>
+        <a href="/health/"> Health </a>
+        <a href="/general/"> General </a>
+        <a href="/food/"> Food </a>
+      </div>
+      {%endblock content%}
+    </section>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h3>About Rēadmire</h3>
+          <p>
+            Rēadmire is a dynamic blog web application for readers who seek and
+            appreciate quality content. Discover thoughtful articles and
+            insightful writing that you'll admire and enjoy. Join our community
+            of passionate readers today.
+          </p>
+          <div class="socials">
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/facebook.png')}}"
+                alt="Facebook"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/twitter.png')}}"
+                alt="Twitter"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/instagram.png')}}"
+                alt="Instagram"
+            /></a>
+            <a href="#"
+              ><img
+                src="{{url_for('static', filename='icons/linkedin.png')}}"
+                alt="LinkedIn"
+            /></a>
+          </div>
+        </div>
+        <div class="footer-section links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/email.png')}}"
+                alt="Email"
+              />
+              support@readmire.com
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/phone.png')}}"
+                alt="Phone"
+              />
+              +234-915-5029-959
+            </li>
+            <li>
+              <img
+                src="{{url_for('static', filename='icons/address.png')}}"
+                alt="Address"
+              />
+              3 Nile Street, Abuja, Nigeria
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Rēadmire. All rights reserved.</p>
+    </div>
+    <script>
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+      }
+    </script>
+  </body>
+</html>

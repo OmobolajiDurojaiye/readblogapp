@@ -1,0 +1,163 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0b0c10;
+  padding: 15px;
+  color: #fff;
+}
+
+.navbar h1 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.home-link {
+  color: #0b0c10;
+  text-decoration: none;
+  font-size: 1.125em;
+  border: 1px solid #66fcf1;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #66fcf1;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}
+
+/* Search Results */
+main {
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+.search-results {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.posts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.post-item {
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.post-item:hover {
+  background: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-item h2 {
+  font-size: 1.25em;
+  margin: 0 0 10px;
+}
+
+.post-description {
+  font-size: 1em;
+  margin: 0 0 10px;
+}
+
+.post-date {
+  font-size: 0.875em;
+  color: #777;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.125em;
+  color: #888;
+}
+
+/*footer*/
+footer {
+  background: #0b0c10;
+  color: #fff;
+  padding: 20px 0;
+  font-family: "Roboto Mono", monospace;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 0 20px;
+  min-width: 200px;
+}
+
+.footer-section h3 {
+  margin-bottom: 20px;
+  color: #66fcf1;
+}
+
+.footer-section p,
+.footer-section ul,
+.footer-section li {
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-section ul li img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.footer-section .socials {
+  margin-top: 15px;
+}
+
+.footer-section .socials a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.footer-section .socials img {
+  width: 30px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 10px;
+  background: #45a29e;
+  color: #fff;
+}
