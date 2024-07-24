@@ -269,7 +269,7 @@
           </div>
           <div class="comment">
             <button type="button" class="commentButton" title="Click to read all comments">
-              comments {#<span class="commentNumber">23</span>#}
+              comments <span class="commentNumber">{{ comments|length }}</span>
             </button>
           </div>
           {#
@@ -476,6 +476,7 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <h4>Make a comment or let us know what you'd like us to write on next</h4>
+        <p class="anonymous-note">*Your comments are anonymous</p>
         <form action="{{ url_for('add_comment', article_id=article.id) }}" method="POST" class="comment-form">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <textarea name="content" required placeholder="Write your comment..."></textarea>
@@ -491,6 +492,7 @@
         </div>
       </div>
     </div>
+    
        
     <script>
       let mybutton = document.getElementById("scrollToTopBtn");

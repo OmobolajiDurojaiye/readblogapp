@@ -81,28 +81,33 @@ def add_comment(article_id):
 
 @app.route('/technical/')
 def technical():
+    background_image = url_for('static', filename='images/technical.jpg')
     posts = Post.query.filter_by(category='technical').order_by(Post.created_at.desc()).all()
-    return render_template('users/technical.html', posts=posts)
+    return render_template('users/technical.html', posts=posts, background_image=background_image)
 
 @app.route('/conservation/')
 def conservation():
+    background_image = url_for('static', filename='images/conservation.jpg')
     posts = Post.query.filter_by(category='conservation').order_by(Post.created_at.desc()).all()
-    return render_template('users/conservation.html', posts=posts)
+    return render_template('users/conservation.html', posts=posts, background_image=background_image)
 
 @app.route('/health/')
 def health():
+    background_image = url_for('static', filename='images/health.jpg')
     posts = Post.query.filter_by(category='health').order_by(Post.created_at.desc()).all()
-    return render_template('users/health.html', posts=posts)
+    return render_template('users/health.html', posts=posts, background_image=background_image)
 
 @app.route('/food/')
 def food():
+    background_image = url_for('static', filename='images/food.jpg')
     posts = Post.query.filter_by(category='food').order_by(Post.created_at.desc()).all()
-    return render_template('users/food.html', posts=posts)
+    return render_template('users/food.html', posts=posts, background_image=background_image)
 
 @app.route('/general/')
 def general():
+    background_image = url_for('static', filename='images/general.jpg')
     posts = Post.query.filter_by(category='general').order_by(Post.created_at.desc()).all()
-    return render_template('users/general.html', posts=posts)
+    return render_template('users/general.html', posts=posts, background_image=background_image)
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():

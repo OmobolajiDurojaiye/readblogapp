@@ -228,6 +228,13 @@ header nav ul li:hover .categories {
   color: #fff;
 }
 
+.anonymous-note {
+  color: red;
+  font-size: 0.8em;
+  font-weight: bolder;
+  padding: 10px 0;
+}
+
 .commentModal {
   position: fixed;
   z-index: 1;
@@ -252,6 +259,8 @@ header nav ul li:hover .categories {
   position: relative;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.3s ease-in-out;
+  overflow: hidden;
+  margin: 20px;
 }
 
 @keyframes fadeIn {
@@ -324,6 +333,9 @@ h4 {
 .comments {
   border-top: 1px solid #444;
   padding-top: 10px;
+  margin-top: 20px;
+  max-height: calc(100% - 180px);
+  overflow-y: auto;
 }
 
 .comment {
