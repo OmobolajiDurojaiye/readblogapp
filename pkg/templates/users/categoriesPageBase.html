@@ -112,13 +112,15 @@
   <body>
     <header>
       <div class="logo">
-        <img
-          src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}"
-          alt="Rēadmire Logo"
-        />
-        <div class="logoName">
-          <p>Rēadmire</p>
-        </div>
+        <a href="/">
+          <img
+            src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}"
+            alt="Rēadmire Logo"
+          />
+          <div class="logoName">
+            <p>Rēadmire</p>
+          </div>
+        </a>
       </div>
       <nav>
         <ul>
@@ -143,7 +145,7 @@
                 <div class="catImage">
                   <img
                     src="{{url_for('static', filename='icons/technical.png')}}"
-                    alt=""
+                    alt="Technical"
                   />
                 </div>
                 <div class="catName">
@@ -154,7 +156,7 @@
                 <div class="catImage">
                   <img
                     src="{{url_for('static', filename='icons/conservation.png')}}"
-                    alt=""
+                    alt="Conservation"
                   />
                 </div>
                 <div class="catName">
@@ -165,7 +167,7 @@
                 <div class="catImage">
                   <img
                     src="{{url_for('static', filename='icons/health.png')}}"
-                    alt=""
+                    alt="Health"
                   />
                 </div>
                 <div class="catName">
@@ -176,7 +178,7 @@
                 <div class="catImage">
                   <img
                     src="{{url_for('static', filename='icons/food.png')}}"
-                    alt=""
+                    alt="Food"
                   />
                 </div>
                 <div class="catName">
@@ -187,7 +189,7 @@
                 <div class="catImage">
                   <img
                     src="{{url_for('static', filename='icons/general.png')}}"
-                    alt=""
+                    alt="General"
                   />
                 </div>
                 <div class="catName">
@@ -196,13 +198,11 @@
               </div>
             </div>
           </li>
-
+          {#
           <li><a href="/">Home</a></li>
+          #}
         </ul>
       </nav>
-      {#<button onclick="toggleDarkMode()" style="color: #fff">
-        Toggle Dark Mode</button
-      >#}
     </header>
 
     <section class="container">

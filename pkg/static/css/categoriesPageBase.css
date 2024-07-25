@@ -16,13 +16,20 @@ body {
   color: #333;
 }
 
+/* Header Styles */
 header {
-  background-color: #0b0c10;
-  color: white;
-  padding: 10px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header .logo {
@@ -30,72 +37,86 @@ header .logo {
   align-items: center;
 }
 
+header .logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 header .logo img {
-  height: 40px;
+  height: 50px;
   margin-right: 10px;
-  border-radius: 10px;
+}
+
+header .logoName p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
 header nav ul {
-  list-style: none;
   display: flex;
-  margin: 0;
-  padding: 0;
+  list-style: none;
 }
 
 header nav ul li {
-  margin: 0 10px;
-}
-
-header nav ul li a {
-  color: white;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-header nav ul li a:hover {
-  background-color: #4a5568;
-}
-
-header nav ul li.dropdown {
+  margin: 0 15px;
   position: relative;
 }
 
+header nav ul li a,
+header nav ul li p.categoriesButton {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+}
+
+header nav ul li p.categoriesButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+header nav ul li p.categoriesButton svg {
+  margin-left: 5px;
+}
+
 header nav ul li .categories {
-  display: none;
   position: absolute;
-  background-color: #2d3748;
   top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  border-radius: 4px;
-  z-index: 999;
+  display: none;
+  flex-direction: column;
+  border-radius: 5px;
+  width: 200px;
+  z-index: 1001;
 }
 
 header nav ul li .categories .catContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 10px 0;
 }
 
-header nav ul li .categories .catContainer img {
-  height: 20px;
+header nav ul li .categories .catContainer .catImage img {
+  width: 30px;
   margin-right: 10px;
 }
 
-header nav ul li .categories .catName a {
-  color: white;
-  text-decoration: none;
-}
-
-header nav ul li .categoriesButton {
-  cursor: pointer;
+header nav ul li .categories .catContainer .catName a {
+  color: #333;
+  text-transform: capitalize;
+  font-size: 1rem;
 }
 
 header nav ul li:hover .categories {
-  display: block;
-  left: 30%;
+  display: flex;
 }
 
 .catImage {
@@ -115,6 +136,7 @@ header nav ul li:hover .categories {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 10vh;
 }
 
 .container .heading {
@@ -143,7 +165,7 @@ header nav ul li:hover .categories {
   font-size: 4em;
   color: #66fcf1;
   padding: 20px;
-  z-index: 2; /* Ensure text is above the overlay */
+  z-index: 2;
 }
 
 @media (max-width: 768px) {

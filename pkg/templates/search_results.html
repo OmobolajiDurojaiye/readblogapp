@@ -9,91 +9,24 @@
       href="{{ url_for('static', filename='css/search.css') }}"
       type="text/css"
     />
-
-    <link
-      rel="apple-touch-icon"
-      sizes="57x57"
-      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="72x72"
-      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="114x114"
-      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
-    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+      href="{{ url_for('static', filename='apple-icon-180x180.png') }}"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+      href="{{ url_for('static', filename='favicon-32x32.png') }}"
     />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="{{url_for('static', filename='/favicon-96x96.png')}}"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="{{url_for('static', filename='/favicon-16x16.png')}}"
-    />
-    <link
-      rel="manifest"
-      href="{{url_for('static', filename='/manifest.json')}}"
-    />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>
     <header>
       <nav class="navbar">
-        <a href="/" class="home-link">Go to homepage</a>
-        <h1>
-          Search Results for <span style="color: #66fcf1"> "{{ query }}" </span>
-        </h1>
+        <a href="/" class="home-link">Homepage</a>
+        <h1>Search Results for <span class="highlight">"{{ query }}"</span></h1>
       </nav>
     </header>
     <main>
@@ -101,7 +34,7 @@
         {% if posts %}
         <div class="posts-list">
           {% for post in posts %}
-          <div class="post-item">
+          <article class="post-item">
             <a
               href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
               class="post-link"
@@ -109,14 +42,15 @@
               <h2>{{ post.title }}</h2>
             </a>
             <p class="post-description">{{ post.description }}</p>
-            <p class="post-date">{{ post.created_at.strftime('%Y-%m-%d') }}</p>
-          </div>
+            <time class="post-date"
+              >{{ post.created_at.strftime('%Y-%m-%d') }}</time
+            >
+          </article>
           {% endfor %}
         </div>
         {% else %}
         <p class="no-results">
-          No results found for
-          <span style="color: #0b0c10"> "{{ query }}" </span>
+          No results found for <span class="highlight">"{{ query }}"</span>
         </p>
         {% endif %}
       </section>
@@ -134,25 +68,25 @@
           <div class="socials">
             <a href="#" aria-label="Facebook">
               <img
-                src="{{url_for('static', filename='icons/facebook.png')}}"
+                src="{{ url_for('static', filename='icons/facebook.png') }}"
                 alt="Facebook"
               />
             </a>
             <a href="#" aria-label="Twitter">
               <img
-                src="{{url_for('static', filename='icons/twitter.png')}}"
+                src="{{ url_for('static', filename='icons/twitter.png') }}"
                 alt="Twitter"
               />
             </a>
             <a href="#" aria-label="Instagram">
               <img
-                src="{{url_for('static', filename='icons/instagram.png')}}"
+                src="{{ url_for('static', filename='icons/instagram.png') }}"
                 alt="Instagram"
               />
             </a>
             <a href="#" aria-label="LinkedIn">
               <img
-                src="{{url_for('static', filename='icons/linkedin.png')}}"
+                src="{{ url_for('static', filename='icons/linkedin.png') }}"
                 alt="LinkedIn"
               />
             </a>
@@ -172,21 +106,21 @@
           <ul>
             <li>
               <img
-                src="{{url_for('static', filename='icons/email.png')}}"
+                src="{{ url_for('static', filename='icons/email.png') }}"
                 alt="Email"
               />
               <a href="mailto:support@readmire.com">support@readmire.com</a>
             </li>
             <li>
               <img
-                src="{{url_for('static', filename='icons/phone.png')}}"
+                src="{{ url_for('static', filename='icons/phone.png') }}"
                 alt="Phone"
               />
               +234-915-5029-959
             </li>
             <li>
               <img
-                src="{{url_for('static', filename='icons/address.png')}}"
+                src="{{ url_for('static', filename='icons/address.png') }}"
                 alt="Address"
               />
               3 Nile Street, Abuja, Nigeria

@@ -143,40 +143,26 @@
 
     <header>
       <div class="logo">
-        <img
-          src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}"
-          alt="Rēadmire Logo"
-        />
-        <div class="logoName">
-          <p>Rēadmire</p>
-        </div>
+        <a href="/">
+          <img src="{{url_for('static', filename='Images/Readmire Logo.jpg')}}" alt="Rēadmire Logo" />
+          <div class="logoName">
+            <p>Rēadmire</p>
+          </div>
+        </a>
       </div>
       <nav>
         <ul>
           <li class="dropdown">
             <p class="categoriesButton">
               Categories
-              <!--arrow dropdown-->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-caret-down-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
               </svg>
             </p>
             <div class="categories hidden">
               <div class="catContainer">
                 <div class="catImage">
-                  <img
-                    src="{{url_for('static', filename='icons/technical.png')}}"
-                    alt=""
-                  />
+                  <img src="{{url_for('static', filename='icons/technical.png')}}" alt="Technical" />
                 </div>
                 <div class="catName">
                   <a href="/technical/">Technical</a>
@@ -184,10 +170,7 @@
               </div>
               <div class="catContainer">
                 <div class="catImage">
-                  <img
-                    src="{{url_for('static', filename='icons/conservation.png')}}"
-                    alt=""
-                  />
+                  <img src="{{url_for('static', filename='icons/conservation.png')}}" alt="Conservation" />
                 </div>
                 <div class="catName">
                   <a href="/conservation/">Conservation</a>
@@ -195,10 +178,7 @@
               </div>
               <div class="catContainer">
                 <div class="catImage">
-                  <img
-                    src="{{url_for('static', filename='icons/health.png')}}"
-                    alt=""
-                  />
+                  <img src="{{url_for('static', filename='icons/health.png')}}" alt="Health" />
                 </div>
                 <div class="catName">
                   <a href="/health/">Health</a>
@@ -206,10 +186,7 @@
               </div>
               <div class="catContainer">
                 <div class="catImage">
-                  <img
-                    src="{{url_for('static', filename='icons/food.png')}}"
-                    alt=""
-                  />
+                  <img src="{{url_for('static', filename='icons/food.png')}}" alt="Food" />
                 </div>
                 <div class="catName">
                   <a href="/food/">Food</a>
@@ -217,10 +194,7 @@
               </div>
               <div class="catContainer">
                 <div class="catImage">
-                  <img
-                    src="{{url_for('static', filename='icons/general.png')}}"
-                    alt=""
-                  />
+                  <img src="{{url_for('static', filename='icons/general.png')}}" alt="General" />
                 </div>
                 <div class="catName">
                   <a href="/general/">General</a>
@@ -228,11 +202,11 @@
               </div>
             </div>
           </li>
-
-          <li><a href="/">Home</a></li>
+          {#<li><a href="/">Home</a></li>#}
         </ul>
       </nav>
     </header>
+    
 
     <div class="container">
       <div class="main-content">
@@ -493,6 +467,7 @@
       </div>
     </div>
     
+    
        
     <script>
       let mybutton = document.getElementById("scrollToTopBtn");
@@ -534,6 +509,24 @@
           commentModal.classList.add('hidden');
         }
       };
+
+
+      // Dropdown menu toggle
+      document.addEventListener('DOMContentLoaded', function () {
+        const categoriesButton = document.querySelector('.categoriesButton');
+        const categoriesMenu = document.querySelector('.categories');
+
+        categoriesButton.addEventListener('click', function () {
+          categoriesMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!categoriesButton.contains(e.target) && !categoriesMenu.contains(e.target)) {
+            categoriesMenu.classList.add('hidden');
+          }
+        });
+      });
+
     </script>
   </body>
 </html>

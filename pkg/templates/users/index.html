@@ -120,7 +120,6 @@
               alt=""
             />
           </div>
-
           <div class="logoName">
             <p>
               <span class="letter1">R</span>
@@ -138,14 +137,7 @@
           <ul>
             <li><a href="">Home</a></li>
             <li class="dropdown">
-              <p
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-                class="categoriesButton"
-              >
+              <p class="categoriesButton">
                 Categories
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -200,13 +192,15 @@
                   <div class="catName"><a href="/food/">Food</a></div>
                 </div>
                 <div class="catContainer">
-                  <div class="catImage">
-                    <img
-                      src="{{url_for('static', filename='icons/general.png')}}"
-                      alt=""
-                    />
-                  </div>
-                  <div class="catName"><a href="/general/">General</a></div>
+                  <a href="/general/">
+                    <div class="catImage">
+                      <img
+                        src="{{url_for('static', filename='icons/general.png')}}"
+                        alt=""
+                      />
+                    </div>
+                    <div class="catName">General</div>
+                  </a>
                 </div>
               </div>
             </li>
@@ -222,18 +216,35 @@
             <h2>Contact Readmire</h2>
             <form id="contactForm">
               <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required />
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required />
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your email"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Your message"
+                  required
+                ></textarea>
               </div>
-              <button type="submit">Send</button>
+              <button type="submit">Send Message</button>
             </form>
             <div class="contact-info">
               <h3>Follow Us</h3>
@@ -246,9 +257,12 @@
                   >Instagram</a
                 >
               </div>
-              <h3>Basic Contact Info</h3>
-              <p>Email: contact@readmire.com</p>
-              <p>Phone: +234-915-5029-959</p>
+              <h3>Contact Information</h3>
+              <p>
+                Email:
+                <a href="mailto:contact@readmire.com">contact@readmire.com</a>
+              </p>
+              <p>Phone: <a href="tel:+2349155029959">+234-915-5029-959</a></p>
             </div>
           </div>
         </div>
