@@ -527,6 +527,19 @@ button[type="submit"]:hover {
   }
 }
 
+/*flash message*/
+.flashMessageContainerDisplay {
+  height: max-content;
+  padding: 10px 10px;
+  border-radius: 10px;
+  background: #66fcf1;
+  color: #0b0c10;
+  position: absolute;
+  bottom: 10%;
+  width: max-content;
+  font-weight: bolder;
+}
+
 /*second section*/
 .recentPosts {
   margin-top: 10vh;

@@ -58,56 +58,62 @@ def contentPage(title):
 
     return render_template('users/contentPageBase.html', article=article, related_articles=related_articles, video_name=video_name, comments=comments)
 
-@app.route('/add_comment/<int:article_id>/', methods=['POST'])
+@app.route('/add_comment/<int:article_id>', methods=['POST'])
 def add_comment(article_id):
-    content = request.form.get('content')
-    if not content:
-        flash('Comment cannot be empty.')
-        return redirect(url_for('contentPage', title=Post.query.get_or_404(article_id).title.replace(' ', '-')))
-    
-    comment = Comment(content=content, article_id=article_id)
-    db.session.add(comment)
+    name = request.form.get('name')
+    email = request.form.get('email')
+    comment_text = request.form.get('comment')
+
+    new_comment = Comment(name=name, email=email, comment=comment_text, article_id=article_id)
+    db.session.add(new_comment)
     db.session.commit()
-    
-    flash('Your comment has been added.')
-    return redirect(url_for('contentPage', title=Post.query.get_or_404(article_id).title.replace(' ', '-')))
+
+    flash('Your comment has been added!', 'success')
+    return redirect(url_for('contentPage', title=Post.query.get_or_404(article_id).title))
 
 
-
-
-
+# @app.route('/categories/')
+# def categories():
+#     background_image = url_for('static', filename='images/food.jpg')
+#     return render_template('users/categoriesPageTemplateBase.html', background_image=background_image)
 
 
 
 @app.route('/technical/')
 def technical():
     background_image = url_for('static', filename='images/technical.jpg')
+    popular = Post.query.filter_by(category='technical').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='technical').order_by(Post.created_at.desc()).all()
-    return render_template('users/technical.html', posts=posts, background_image=background_image)
+    return render_template('users/technical.html', posts=posts, background_image=background_image, popular=popular)
+
 
 @app.route('/conservation/')
 def conservation():
     background_image = url_for('static', filename='images/conservation.jpg')
+    popular = Post.query.filter_by(category='conservation').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='conservation').order_by(Post.created_at.desc()).all()
-    return render_template('users/conservation.html', posts=posts, background_image=background_image)
+    return render_template('users/conservation.html', posts=posts, background_image=background_image, popular=popular)
 
 @app.route('/health/')
 def health():
     background_image = url_for('static', filename='images/health.jpg')
+    popular = Post.query.filter_by(category='health').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='health').order_by(Post.created_at.desc()).all()
-    return render_template('users/health.html', posts=posts, background_image=background_image)
+    return render_template('users/health.html', posts=posts, background_image=background_image, popular=popular)
 
 @app.route('/food/')
 def food():
     background_image = url_for('static', filename='images/food.jpg')
+    popular = Post.query.filter_by(category='food').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='food').order_by(Post.created_at.desc()).all()
-    return render_template('users/food.html', posts=posts, background_image=background_image)
+    return render_template('users/food.html', posts=posts, background_image=background_image, popular=popular)
 
 @app.route('/general/')
 def general():
     background_image = url_for('static', filename='images/general.jpg')
+    popular = Post.query.filter_by(category='general').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='general').order_by(Post.created_at.desc()).all()
-    return render_template('users/general.html', posts=posts, background_image=background_image)
+    return render_template('users/general.html', posts=posts, background_image=background_image, popular=popular)
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():

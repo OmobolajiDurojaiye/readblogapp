@@ -202,6 +202,23 @@
               </div>
             </div>
           </li>
+
+          <!-- Search form -->
+          <li>
+            <form action="{{ url_for('search') }}" method="GET" class="searchForm">
+              <input
+                type="text"
+                name="query"
+                placeholder="Search..."
+                required
+              />
+              <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+              </button>
+            </form>
+          </li>
           {#<li><a href="/">Home</a></li>#}
         </ul>
       </nav>
@@ -446,27 +463,39 @@
       <p>&copy; 2024 Rēadmire. All rights reserved.</p>
     </div>
 
-    <div class="commentModal hidden">
+    <!-- Comment Modal -->
+    <div id="commentModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h4>Make a comment or let us know what you'd like us to write on next</h4>
-        <p class="anonymous-note">*Your comments are anonymous</p>
-        <form action="{{ url_for('add_comment', article_id=article.id) }}" method="POST" class="comment-form">
+        <h2>Leave a Comment</h2>
+        <form action="{{ url_for('add_comment', article_id=article.id) }}" method="POST">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <textarea name="content" required placeholder="Write your comment..."></textarea>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="3" required></textarea>
+          </div>
           <button type="submit">Submit</button>
         </form>
-        <div class="comments">
+        <hr>
+        <h3>Comments</h3>
+        <div id="comments-section">
           {% for comment in comments %}
             <div class="comment">
-              <p>{{ comment.content }}</p>
-              <small>{{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+              <p><strong>{{ comment.name }}</strong> <span class="comment-date">{{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</span></p>
+              <p class="comment-text">{{ comment.comment }}</p>
             </div>
           {% endfor %}
         </div>
       </div>
     </div>
-    
     
        
     <script>
@@ -492,25 +521,6 @@
         document.documentElement.scrollTop = 0;
       };
 
-      /*comment modal*/
-      const commentButton = document.querySelector('.commentButton');
-      const commentModal = document.querySelector('.commentModal');
-      const close = document.querySelector('.close');
-      commentButton.addEventListener('click', function(){
-        commentModal.classList.remove('hidden')
-      });
-
-      close.addEventListener('click', function(){
-        commentModal.classList.add('hidden')
-      })
-
-      window.onclick = function (event) {
-        if (event.target == commentModal) {
-          commentModal.classList.add('hidden');
-        }
-      };
-
-
       // Dropdown menu toggle
       document.addEventListener('DOMContentLoaded', function () {
         const categoriesButton = document.querySelector('.categoriesButton');
@@ -528,5 +538,30 @@
       });
 
     </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const commentButton = document.querySelector('.commentButton');
+    const modal = document.getElementById('commentModal');
+    const closeButton = document.querySelector('.close');
+  
+    commentButton.addEventListener('click', function () {
+      modal.style.display = 'block';
+    });
+  
+    closeButton.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+  
+    window.addEventListener('click', function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+  </script>
+  
+    
+    
   </body>
 </html>

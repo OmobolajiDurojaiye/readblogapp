@@ -13,6 +13,7 @@
     />
     <meta name="author" content="Omobolaji Durojaiye" />
     <meta name="author" content="Adeniyi Samuel" />
+    <!-- <meta name="author" content="Alabi Oluwatobiloba Ezekiel" /> -->
     <title>Rēadmire - Insightful Blogs and articles</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -111,6 +112,16 @@
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
     <section class="head">
       <header>
         <div class="logo">
@@ -122,7 +133,7 @@
           </div>
           <div class="logoName">
             <p>
-              <span class="letter1">R</span>
+              <!-- <span class="letter1">R</span> -->
               <span class="letter2">ē</span>
               <span class="letter3">a</span>
               <span class="letter4">d</span>
@@ -192,15 +203,15 @@
                   <div class="catName"><a href="/food/">Food</a></div>
                 </div>
                 <div class="catContainer">
-                  <a href="/general/">
-                    <div class="catImage">
-                      <img
-                        src="{{url_for('static', filename='icons/general.png')}}"
-                        alt=""
-                      />
-                    </div>
-                    <div class="catName">General</div>
-                  </a>
+                  <div class="catImage">
+                    <img
+                      src="{{url_for('static', filename='icons/general.png')}}"
+                      alt=""
+                    />
+                  </div>
+                  <div class="catName">
+                    <a href="/general/"> General </a>
+                  </div>
                 </div>
               </div>
             </li>
@@ -437,7 +448,7 @@
       </section>
     </section>
 
-    <section class="subscribe">
+    <section class="subscribe" id="subscribe">
       <div class="subscription-container">
         <h2>Subscribe to Our Newsletter</h2>
         <p>Get the latest article updates directly to your inbox.</p>

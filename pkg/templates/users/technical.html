@@ -1,35 +1,59 @@
-{%extends 'users/categoriesPageBase.html'%} {%block title%} Technical {%endblock
-title%} {%block categoryHead%} Technical {%endblock categoryHead%} {% block
-content %}
-<div
-  class="heading"
-  style="background-image: url('{{ background_image }}'); background-position: center; background-size: cover;"
->
-  <h1>Technical Articles</h1>
+{%extends 'users/categoriesPageTemplateBase.html'%} {%block
+title%}Technical{%endblock title%} {%block catName%}Technical{%endblock
+catName%} {%block popular%}
+<div class="popular">
+  <div class="articles">
+    {% for post in popular %}
+    <div class="article-box">
+      <a
+        href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+      >
+        <img
+          src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+          alt="{{ post.title }}"
+        />
+        <div class="article-title">{{ post.title }}</div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
-<div class="content">
+{%endblock popular%} {%block recent%}
+<div class="recent">
   {% for post in posts %}
-  <div class="catCard">
-    <div class="catCardImage">
-      <img
-        src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
-        alt="{{ post.title }}"
-      />
-    </div>
-    <div class="catDesc">
+  <div class="recent-compartment">
+    <img
+      src="{{ url_for('static', filename='uploads/' + post.cover_image_url) }}"
+      alt="{{ post.title }}"
+    />
+    <div class="recent-details">
       <a
-        href="{{ url_for('contentPage', title=post.title.replace(' ', '-')) }}"
+        href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
       >
-        <div class="catDescTitle">
-          <h2>{{ post.title }}</h2>
-        </div>
-        <div class="catDescDesc">
-          <p>{{ post.description }}</p>
-        </div>
+        <div class="recent-title">{{ post.title }}</div>
+        {#
+        <div class="recent-description">{{ post.description }}</div>
+        #}
       </a>
+    </div>
+    <div class="view-count">
+      {{ post.view_count }}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-eye-fill"
+        viewBox="0 0 16 16"
+      >
+        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+        <path
+          d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+        />
+      </svg>
     </div>
   </div>
   {% endfor %}
 </div>
-{% endblock %}
+{%endblock recent%}

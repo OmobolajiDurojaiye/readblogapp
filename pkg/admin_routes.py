@@ -140,61 +140,106 @@ def send_article_notification(post):
 
         msg.html = render_template_string("""
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
-                    background-color: white;
-                    color: black;
-                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    color: #333;
+                    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 }
                 .header {
                     background-color: #0b0c10;
                     color: #66fcf1;
                     text-align: center;
-                    padding: 20px 0;
+                    padding: 30px 20px;
                 }
                 .header h1 {
                     margin: 0;
-                    font-size: 24px;
+                    font-size: 28px;
+                    font-weight: 700;
                 }
                 .content {
-                    padding: 20px;
-                }
-                .footer {
-                    background-color: #333;
-                    color: #aaa;
-                    text-align: center;
-                    padding: 10px 0;
-                    font-size: 12px;
+                    padding: 30px 20px;
                 }
                 .cover-image {
                     width: 100%;
                     max-width: 600px;
                     height: auto;
+                    display: block;
+                    margin-bottom: 20px;
+                    border-radius: 8px 8px 0 0;
                 }
                 .title {
                     text-align: center;
-                    font-size: 20px;
-                    margin: 10px 0;
+                    font-size: 24px;
+                    font-weight: 600;
+                    margin: 20px 0;
+                    color: #444;
+                }
+                .content p {
+                    font-size: 16px;
+                    line-height: 1.6;
+                    color: #555;
+                }
+                .content a {
+                    color: #1a73e8;
+                    text-decoration: none;
+                }
+                .footer {
+                    background-color: #333;
+                    color: #aaa;
+                    text-align: center;
+                    padding: 20px;
+                    font-size: 14px;
+                }
+                .footer a {
+                    color: #66fcf1;
+                    text-decoration: none;
+                }
+                @media only screen and (max-width: 600px) {
+                    .header, .content, .footer {
+                        padding: 15px;
+                    }
+                    .header h1 {
+                        font-size: 24px;
+                    }
+                    .title {
+                        font-size: 20px;
+                    }
                 }
             </style>
         </head>
         <body>
-            <div class="header">
-                <h1>Rēadmire</h1>
-            </div>
-            <div class="content">
-                <img src="{{ cover_image_url }}" alt="Cover Image" class="cover-image">
-                <h2 class="title">{{ post.title }}</h2>
-                <p>Hello,</p>
-                <p>A new article has been posted: <strong>{{ post.title }}</strong></p>
-                <p>You can read it <a href="{{ article_url }}" style="color: #1a73e8;">here</a>.</p>
-                <p>Best Regards,</p>
-                <p>Rēadmire</p>
-            </div>
-            <div class="footer">
-                &copy; 2024 Rēadmire. All rights reserved.
+            <div class="container">
+                <div class="header">
+                    <h1>Rēadmire</h1>
+                </div>
+                <div class="content">
+                    <img src="{{ cover_image_url }}" alt="Cover Image" class="cover-image">
+                    <h2 class="title">{{ post.title }}</h2>
+                    <p>Hello,</p>
+                    <p>A new article has been posted: <strong>{{ post.title }}</strong></p>
+                    <p>You can read it <a href="{{ article_url }}">here</a>.</p>
+                    <p>Best Regards,</p>
+                    <p>Rēadmire Team</p>
+                </div>
+                <div class="footer">
+                    &copy; 2024 Rēadmire. All rights reserved. <br>
+                    # <a href="{{ unsubscribe_url }}">Unsubscribe</a>
+                </div>
             </div>
         </body>
         </html>
