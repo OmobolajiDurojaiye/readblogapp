@@ -1,0 +1,222 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  list-style-type: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flash message container */
+.flashMessageContainerDisplay {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #45a29e;
+  color: #0b0c10;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  margin-bottom: 10px;
+}
+
+/* User profile details */
+.top {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.profile-image:hover {
+  border-color: #66fcf1;
+}
+
+.profile-name {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-update-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #0b0c10;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #66fcf1;
+  border-radius: 6px;
+  background-color: #0b0c10;
+  color: #66fcf1;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-input:hover {
+  background-color: #1f2f33;
+  border-color: #1f2f33;
+}
+
+.update-profile-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #66fcf1;
+  background-color: #0b0c10;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.update-profile-btn:hover {
+  background-color: #1f2f33;
+  transform: scale(1.05);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.stat-box {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #0b0c10;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #555;
+}
+
+/*navigator*/
+.navigator {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.navigator-item {
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+.navigator-item img {
+  display: block;
+  margin: 0 auto;
+  width: 24px;
+  height: 24px;
+}
+
+.navigator-item p {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-menu {
+  position: absolute;
+  bottom: 60px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: none;
+  width: max-content;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.dropdown-item a {
+  display: flex;
+  align-items: center;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.dropdown-item a img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.dropdown-item a p {
+  font-size: 14px;
+  color: #333;
+}

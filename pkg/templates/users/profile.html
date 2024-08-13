@@ -1,1 +1,213 @@
-prooooofiiile
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical articles, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye, Adeniyi Samuel" />
+    <title>{{user.name}} | Rēadmire</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/profile.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <div class="navigator">
+      <div class="navigator-item" id="profile">
+        <a href="">
+          <img
+            src="{{url_for('static', filename='icons/home.png')}}"
+            alt="home Icon"
+          />
+          <p>Home</p>
+        </a>
+      </div>
+
+      <div class="navigator-item" id="categories">
+        <img
+          src="{{url_for('static', filename='icons/categories.png')}}"
+          alt="Categories Icon"
+        />
+        <p>Categories</p>
+        <div class="dropdown-menu" id="categoriesDropdown">
+          <div class="dropdown-item">
+            <a href="/general">
+              <img
+                src="{{url_for('static', filename='icons/general.png')}}"
+                alt="General Icon"
+              />
+              <p>General</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/technical">
+              <img
+                src="{{url_for('static', filename='icons/technical.png')}}"
+                alt="Technical Icon"
+              />
+              <p>Technical</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/food">
+              <img
+                src="{{url_for('static', filename='icons/food.png')}}"
+                alt="Food Icon"
+              />
+              <p>Food</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/conservation">
+              <img
+                src="{{url_for('static', filename='icons/conservation.png')}}"
+                alt="Conservation Icon"
+              />
+              <p>Conservation</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/health">
+              <img
+                src="{{url_for('static', filename='icons/health.png')}}"
+                alt="Health Icon"
+              />
+              <p>Health</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigator-item" id="profile">
+        <a href="{{ url_for('profile', username=user.name) }}">
+          {% if user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+            alt="Profile Image"
+          />
+          {% else %}
+          <img
+            src="{{url_for('static', filename='icons/profile.png')}}"
+            alt="Profile Icon"
+          />
+          {%endif%}
+          <p>Profile</p>
+        </a>
+      </div>
+
+      <div class="navigator-item" id="logout">
+        <a href="{{ url_for('userLogout') }}">
+          <img
+            src="{{url_for('static', filename='icons/logout.png')}}"
+            alt="Logout Icon"
+          />
+          <p>Logout</p>
+        </a>
+      </div>
+    </div>
+
+    <main>
+      <div class="top">
+        <div class="profile-header">
+          {% if user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+            alt="Profile Image"
+            class="profile-image"
+            id="profileImage"
+          />
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='icons/profile.png') }}"
+            alt="Profile Image"
+            class="profile-image"
+            id="profileImage"
+          />
+          {% endif %}
+          <h1 class="profile-name">{{ user.name }}</h1>
+          <form
+            action="{{ url_for('update_profile_picture', username=user.name) }}"
+            method="POST"
+            enctype="multipart/form-data"
+            class="profile-update-form"
+          >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group">
+              <input
+                type="file"
+                name="profile_picture"
+                accept="image/*"
+                class="file-input"
+              />
+            </div>
+            <button type="submit" class="update-profile-btn">Update</button>
+          </form>
+        </div>
+
+        <div class="stats">
+          <div class="stat-box">
+            <p class="stat-number">120</p>
+            <p class="stat-label">Articles Read</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-number">45</p>
+            <p class="stat-label">Comments Made</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
+    <script>
+      document
+        .getElementById("categories")
+        .addEventListener("click", function () {
+          document
+            .getElementById("categoriesDropdown")
+            .classList.toggle("active");
+        });
+    </script>
+  </body>
+</html>

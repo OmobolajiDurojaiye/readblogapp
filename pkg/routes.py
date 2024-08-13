@@ -5,6 +5,15 @@ import os
 from pkg import app
 from pkg.models import db, Post, Subscriber, Comment, User
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+UPLOAD_FOLDER = 'static/uploads/'
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 #custom errors
 @app.errorhandler(404)
 def not_found_error(error):
@@ -77,11 +86,12 @@ def userLogin():
         if user and user.check_password(password):
             session['user_id'] = user.id
             flash('Logged in successfully!')
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username=user.name))
         else:
             flash('Login failed. Please check your email and password.')
 
     return render_template('users/login.html', background_image=background_image)
+
 
 
 @app.route('/logout/')
@@ -92,14 +102,44 @@ def userLogout():
 
 
 
-@app.route('/user-profile/')
-def profile():
+@app.route('/user-profile/<username>/')
+def profile(username):
     if 'user_id' not in session:
         flash('Please log in to access your profile.')
         return redirect(url_for('userLogin'))
 
-    user = User.query.get(session['user_id'])
+    user = User.query.filter_by(name=username).first_or_404()
     return render_template('users/profile.html', user=user)
+
+@app.route('/update-profile-picture/<username>/', methods=['POST'])
+def update_profile_picture(username):
+    if 'user_id' not in session:
+        flash('Please log in to update your profile picture.')
+        return redirect(url_for('userLogin'))
+
+    user = User.query.filter_by(name=username).first_or_404()
+
+    if 'profile_picture' not in request.files:
+        flash('No file part')
+        return redirect(url_for('profile', username=username))
+
+    file = request.files['profile_picture']
+
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(url_for('profile', username=username))
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Update user profile picture filename in the database
+        user.profile_picture = filename  # Add this field to your User model
+        db.session.commit()
+        flash('Profile picture updated successfully!')
+    else:
+        flash('Invalid file type')
+
+    return redirect(url_for('profile', username=username))
 
 
 
@@ -122,7 +162,11 @@ def contentPage(title):
 
     comments = Comment.query.filter_by(article_id=article.id).order_by(Comment.created_at.desc()).all()
 
-    return render_template('users/contentPageBase.html', article=article, related_articles=related_articles, video_name=video_name, comments=comments)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id) if user_id else None
+
+    return render_template('users/contentPageBase.html', article=article, related_articles=related_articles, video_name=video_name, comments=comments, user=user)
+
 
 @app.route('/add_comment/<int:article_id>', methods=['POST'])
 def add_comment(article_id):
@@ -150,7 +194,12 @@ def technical():
     background_image = url_for('static', filename='images/technical.jpg')
     popular = Post.query.filter_by(category='technical').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='technical').order_by(Post.created_at.desc()).all()
-    return render_template('users/technical.html', posts=posts, background_image=background_image, popular=popular)
+
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+
+    return render_template('users/technical.html', posts=posts, background_image=background_image, popular=popular, user=user)
 
 
 @app.route('/conservation/')
@@ -158,28 +207,49 @@ def conservation():
     background_image = url_for('static', filename='images/conservation.jpg')
     popular = Post.query.filter_by(category='conservation').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='conservation').order_by(Post.created_at.desc()).all()
-    return render_template('users/conservation.html', posts=posts, background_image=background_image, popular=popular)
+    
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+    
+    return render_template('users/conservation.html', posts=posts, background_image=background_image, popular=popular, user=user)
+
 
 @app.route('/health/')
 def health():
     background_image = url_for('static', filename='images/health.jpg')
     popular = Post.query.filter_by(category='health').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='health').order_by(Post.created_at.desc()).all()
-    return render_template('users/health.html', posts=posts, background_image=background_image, popular=popular)
+
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+
+    return render_template('users/health.html', posts=posts, background_image=background_image, popular=popular, user=user)
 
 @app.route('/food/')
 def food():
     background_image = url_for('static', filename='images/food.jpg')
     popular = Post.query.filter_by(category='food').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='food').order_by(Post.created_at.desc()).all()
-    return render_template('users/food.html', posts=posts, background_image=background_image, popular=popular)
+
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+
+    return render_template('users/food.html', posts=posts, background_image=background_image, popular=popular, user=user)
 
 @app.route('/general/')
 def general():
     background_image = url_for('static', filename='images/general.jpg')
     popular = Post.query.filter_by(category='general').order_by(Post.view_count.desc()).limit(5).all()
     posts = Post.query.filter_by(category='general').order_by(Post.created_at.desc()).all()
-    return render_template('users/general.html', posts=posts, background_image=background_image, popular=popular)
+
+    user = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+
+    return render_template('users/general.html', posts=posts, background_image=background_image, popular=popular, user=user)
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():

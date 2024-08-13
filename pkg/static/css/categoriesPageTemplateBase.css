@@ -53,6 +53,27 @@ main {
   z-index: 2;
 }
 
+#searchForm .search-container {
+  display: flex;
+  margin: 10px;
+}
+
+#searchForm .search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+#searchForm .search-container .search-button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #0b0c10;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
 .tag {
   height: max-content;
   width: max-content;

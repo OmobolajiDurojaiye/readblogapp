@@ -183,15 +183,33 @@
       </div>
 
       <div class="navigator-item" id="profile">
-        <a href="">
+        {% if user %}
+        <a href="{{ url_for('profile', username=user.name) }}">
+          {% if user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+            alt="Profile Image"
+          />
+          {% else %}
           <img
             src="{{url_for('static', filename='icons/profile.png')}}"
             alt="Profile Icon"
           />
+          {%endif%}
           <p>Profile</p>
         </a>
+        {% else %}
+        <a href="{{ url_for('userSignup') }}">
+          <img
+            src="{{ url_for('static', filename='icons/signup.png') }}"
+            alt="Signup Icon"
+          />
+          <p>Signup</p>
+        </a>
+        {% endif %}
       </div>
 
+      {% if user %}
       <div class="navigator-item" id="logout">
         <a href="{{ url_for('userLogout') }}">
           <img
@@ -201,6 +219,7 @@
           <p>Logout</p>
         </a>
       </div>
+      {% endif %}
     </div>
 
     <main>
@@ -210,6 +229,13 @@
       >
         <h1>{%block catName%}{%endblock catName%}</h1>
       </div>
+
+      <form action="{{ url_for('search') }}" method="GET" id="searchForm">
+        <div class="search-container">
+          <input type="text" placeholder="Search for Articles..." />
+          <button type="submit" class="search-button">Search</button>
+        </div>
+      </form>
 
       <div class="tag">
         <h2>popular:</h2>
