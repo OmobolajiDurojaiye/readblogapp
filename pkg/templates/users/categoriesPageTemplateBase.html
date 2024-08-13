@@ -193,11 +193,13 @@
       </div>
 
       <div class="navigator-item" id="logout">
-        <img
-          src="{{url_for('static', filename='icons/logout.png')}}"
-          alt="Logout Icon"
-        />
-        <p>Logout</p>
+        <a href="{{ url_for('userLogout') }}">
+          <img
+            src="{{url_for('static', filename='icons/logout.png')}}"
+            alt="Logout Icon"
+          />
+          <p>Logout</p>
+        </a>
       </div>
     </div>
 

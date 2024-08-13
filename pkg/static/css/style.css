@@ -121,8 +121,8 @@ nav ul li p {
   cursor: pointer;
 }
 
-nav ul li button {
-  font-weight: bolder;
+nav ul li #contactButton {
+  /* font-weight: bolder; */
   color: #66fcf1;
   border: none;
   cursor: pointer;
@@ -190,81 +190,6 @@ nav ul li button {
 
 .dropdown:hover .categories {
   display: block;
-}
-
-/* Modal Overlay */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-}
-
-/* Modal Content */
-.modal-content {
-  background: #ffffff;
-  margin: 10% auto;
-  padding: 30px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-/* Close Button */
-.close {
-  color: #333;
-  font-size: 30px;
-  font-weight: bold;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-}
-
-/* Form Styling */
-#contactForm {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  font-weight: 600;
-  color: #333;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #1f2833;
-  outline: none;
 }
 
 /* Button Styling */
@@ -527,17 +452,27 @@ button[type="submit"]:hover {
   }
 }
 
-/*flash message*/
+/* Flash message container */
 .flashMessageContainerDisplay {
-  height: max-content;
-  padding: 10px 10px;
-  border-radius: 10px;
-  background: #66fcf1;
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #66fcf1;
   color: #0b0c10;
-  position: absolute;
-  bottom: 10%;
-  width: max-content;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  margin-bottom: 10px;
 }
 
 /*second section*/

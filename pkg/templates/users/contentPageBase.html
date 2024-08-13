@@ -112,6 +112,12 @@
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>
+    {#<p class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+      </svg>
+    </p>#}
+
     <div class="navigator">
       <div class="navigator-item" id="profile">
         <a href="">
@@ -193,11 +199,13 @@
       </div>
 
       <div class="navigator-item" id="logout">
-        <img
-          src="{{url_for('static', filename='icons/logout.png')}}"
-          alt="Logout Icon"
-        />
-        <p>Logout</p>
+        <a href="{{ url_for('userLogout') }}">
+          <img
+            src="{{url_for('static', filename='icons/logout.png')}}"
+            alt="Logout Icon"
+          />
+          <p>Logout</p>
+        </a>
       </div>
     </div>
     <!-- Background video -->

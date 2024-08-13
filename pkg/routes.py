@@ -1,6 +1,9 @@
 from flask import Flask, render_template, url_for, redirect, request, session, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+import os
 from pkg import app
-from pkg.models import db, Post, Subscriber, Comment
+from pkg.models import db, Post, Subscriber, Comment, User
 
 #custom errors
 @app.errorhandler(404)
@@ -34,6 +37,69 @@ def search():
         posts = []
 
     return render_template('search_results.html', posts=posts, query=query)
+
+
+@app.route('/get-started/signup/', methods=['GET', 'POST'])
+def userSignup():
+    background_image = url_for('static', filename='images/food.jpg')
+
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email address already exists. Please log in.')
+            return redirect(url_for('userLogin'))
+
+        new_user = User(name=name, email=email)
+        new_user.password = password 
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Account created successfully! Please log in.')
+        return redirect(url_for('userLogin'))
+
+    return render_template('users/userAuth.html', background_image=background_image)
+
+
+@app.route('/get-started/login/', methods=['GET', 'POST'])
+def userLogin():
+    background_image = url_for('static', filename='images/food.jpg')
+
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        user = User.query.filter_by(email=email).first()
+        if user and user.check_password(password):
+            session['user_id'] = user.id
+            flash('Logged in successfully!')
+            return redirect(url_for('profile'))
+        else:
+            flash('Login failed. Please check your email and password.')
+
+    return render_template('users/login.html', background_image=background_image)
+
+
+@app.route('/logout/')
+def userLogout():
+    session.pop('user_id', None)
+    flash('You have been logged out.')
+    return redirect(url_for('userLogin'))
+
+
+
+@app.route('/user-profile/')
+def profile():
+    if 'user_id' not in session:
+        flash('Please log in to access your profile.')
+        return redirect(url_for('userLogin'))
+
+    user = User.query.get(session['user_id'])
+    return render_template('users/profile.html', user=user)
 
 
 

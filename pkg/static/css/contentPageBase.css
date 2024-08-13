@@ -15,6 +15,20 @@ body {
   color: #333;
 }
 
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  background: rgba(197, 192, 192, 0.5);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
 /* Background video */
 #background-video {
   position: fixed;
@@ -94,14 +108,14 @@ body {
 
 .dropdown-menu {
   position: absolute;
-  bottom: 60px; /* Adjust based on navigator height */
+  bottom: 60px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: none;
-  width: 200px; /* Adjust width as needed */
+  width: max-content;
 }
 
 .dropdown-menu.active {

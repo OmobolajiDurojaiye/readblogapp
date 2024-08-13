@@ -1,0 +1,25 @@
+{%extends "users/userAuth.html"%} {%block form%}
+<div class="formContainer">
+  <h2>Login</h2>
+  <form method="POST" action="{{ url_for('userLogin') }}">
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+    <input type="email" name="email" placeholder="Email" required />
+    <div class="password-container">
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        id="password"
+        required
+      />
+      <button type="button" id="togglePassword" class="toggle-password">
+        Show
+      </button>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+  <div class="login-message">
+    Already have an account? <a href="/get-started/signup/">Signup</a>
+  </div>
+</div>
+{%endblock form%}

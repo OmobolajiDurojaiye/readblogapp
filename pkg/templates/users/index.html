@@ -122,6 +122,7 @@
       </div>
       {% endif %} {% endwith %}
     </div>
+
     <section class="head">
       <header>
         <div class="logo">
@@ -216,67 +217,11 @@
               </div>
             </li>
             <li><a href="">About</a></li>
-            <li><button id="contactButton">Contact</button></li>
+            <li>
+              <a href="/get-started/signup/" id="contactButton">Get Started</a>
+            </li>
           </ul>
         </nav>
-
-        <!-- Modal -->
-        <div id="contactModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Contact Readmire</h2>
-            <form id="contactForm">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Your email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  placeholder="Your message"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit">Send Message</button>
-            </form>
-            <div class="contact-info">
-              <h3>Follow Us</h3>
-              <div class="social-media">
-                <a href="https://twitter.com/readmire" target="_blank">X</a>
-                <a href="https://facebook.com/readmire" target="_blank"
-                  >Facebook</a
-                >
-                <a href="https://instagram.com/readmire" target="_blank"
-                  >Instagram</a
-                >
-              </div>
-              <h3>Contact Information</h3>
-              <p>
-                Email:
-                <a href="mailto:contact@readmire.com">contact@readmire.com</a>
-              </p>
-              <p>Phone: <a href="tel:+2349155029959">+234-915-5029-959</a></p>
-            </div>
-          </div>
-        </div>
       </header>
 
       <form action="{{ url_for('search') }}" method="GET" id="searchForm">
@@ -544,6 +489,7 @@
       <p>&copy; 2024 Rēadmire. All rights reserved.</p>
     </div>
 
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/script.js')}}"></script>
   </body>
 </html>

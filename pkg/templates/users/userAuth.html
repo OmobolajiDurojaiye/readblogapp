@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical artices, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye" />
+    <meta name="author" content="Adeniyi Samuel" />
+    <!-- <meta name="author" content="Alabi Oluwatobiloba Ezekiel" /> -->
+    <title>Get Started | Rēadmire</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/userAuth.css')}}"
+      type="text/css"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body
+    style="background-image: url('{{ background_image }}'); background-position: center; background-size: cover;"
+  >
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+    <div class="backHome">
+      <a href="/">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-arrow-left"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+          />
+        </svg>
+        Back home
+      </a>
+    </div>
+
+    <main>
+      {%block form%}
+      <div class="formContainer">
+        <h2>Create New Account</h2>
+        <form method="POST" action="{{ url_for('userSignup') }}">
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <div class="password-container">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+              required
+            />
+            <button type="button" id="togglePassword" class="toggle-password">
+              Show
+            </button>
+          </div>
+          <button type="submit">Sign Up</button>
+        </form>
+        <div class="login-message">
+          Already have an account? <a href="/get-started/login/">Login</a>
+        </div>
+      </div>
+
+      {%endblock form%}
+    </main>
+
+    <script>
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const passwordField = document.getElementById("password");
+          const type =
+            passwordField.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordField.setAttribute("type", type);
+
+          this.textContent = type === "password" ? "Show" : "Hide";
+        });
+    </script>
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
+  </body>
+</html>

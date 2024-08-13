@@ -1,0 +1,155 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  list-style-type: none;
+}
+
+/* Flash message container */
+.flashMessageContainerDisplay {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #66fcf1;
+  color: #0b0c10;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  margin-bottom: 10px;
+}
+
+.backHome {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #66fcf1;
+  border-radius: 50px;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.backHome a {
+  color: #0b0c10 !important;
+}
+
+.backHome:hover {
+  background-color: #45a29e;
+  transform: scale(1.05);
+}
+
+main {
+  height: 80vh;
+  padding: 20px;
+  width: 100%;
+  border-radius: 30px 30px 0 0;
+  margin-top: 20vh;
+  background: #0b0c10;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px;
+  border-radius: 10px;
+  color: #66fcf1;
+  font-family: "Roboto Mono", monospace;
+}
+
+.formContainer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.formContainer input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #1f2833;
+  color: #66fcf1;
+  font-size: 16px;
+}
+
+.formContainer input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #66fcf1;
+}
+
+.formContainer button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #45a29e;
+  border: none;
+  border-radius: 5px;
+  color: #0b0c10 !important;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formContainer button:hover {
+  background-color: #66fcf1;
+}
+
+.formContainer .login-message {
+  margin-top: 20px;
+  text-align: center;
+  color: #c5c6c7;
+  font-size: 14px;
+}
+
+.formContainer .login-message a {
+  color: #66fcf1;
+  text-decoration: none;
+}
+
+.formContainer .login-message a:hover {
+  text-decoration: underline;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 20%;
+  transform: translateY(-50%);
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  color: #66fcf1 !important;
+  font-size: 14px;
+  width: max-content !important;
+  height: max-content !important;
+}
+
+.toggle-password:focus {
+  outline: none;
+}

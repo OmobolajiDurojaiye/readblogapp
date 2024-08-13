@@ -230,14 +230,14 @@ main {
 
 .dropdown-menu {
   position: absolute;
-  bottom: 60px; /* Adjust based on navigator height */
+  bottom: 60px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: none;
-  width: 200px; /* Adjust width as needed */
+  width: max-content;
 }
 
 .dropdown-menu.active {
