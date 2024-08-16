@@ -17,6 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         flashMessageContainer.style.display = "none";
       }, 500);
-    }, 5000);
+    }, 3000);
   }
 });

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, session, flash
+from flask import Flask, render_template, url_for, redirect, request, session, flash, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
@@ -100,6 +100,38 @@ def userLogout():
     flash('You have been logged out.')
     return redirect(url_for('userLogin'))
 
+@app.route('/feed/')
+def feed():
+    user_id = session.get('user_id')
+    user = User.query.get(user_id) if user_id else None
+
+    # Fetch the latest articles
+    latest_articles = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+
+    # Fetch category-specific articles
+    conservation_articles = Post.query.filter_by(category='Conservation').order_by(Post.created_at.desc()).limit(10).all()
+    general_articles = Post.query.filter_by(category='General').order_by(Post.created_at.desc()).limit(10).all()
+    food_articles = Post.query.filter_by(category='Food').order_by(Post.created_at.desc()).limit(10).all()
+    health_articles = Post.query.filter_by(category='Health').order_by(Post.created_at.desc()).limit(10).all()
+    technical_articles = Post.query.filter_by(category='Technical').order_by(Post.created_at.desc()).limit(10).all()
+
+    top_articles = Post.query.order_by(Post.view_count.desc()).limit(5).all()
+
+    top_users = User.query.order_by(User.articles_viewed.desc()).limit(5).all()
+
+    return render_template('users/feed.html', 
+                           latest_articles=latest_articles, 
+                           conservation_articles=conservation_articles,
+                           general_articles=general_articles,
+                           food_articles=food_articles,
+                           health_articles=health_articles,
+                           technical_articles=technical_articles,
+                           top_articles=top_articles,
+                           top_users=top_users,
+                           user=user)
+
+
+
 
 
 @app.route('/user-profile/<username>/')
@@ -166,6 +198,23 @@ def contentPage(title):
     user = User.query.get(user_id) if user_id else None
 
     return render_template('users/contentPageBase.html', article=article, related_articles=related_articles, video_name=video_name, comments=comments, user=user)
+
+@app.route('/track_article_view/<int:article_id>/', methods=['GET'])
+def track_article_view(article_id):
+    user_id = session.get('user_id')
+    
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            if user.articles_viewed is None:
+                user.articles_viewed = 0
+            
+            user.articles_viewed += 1
+            db.session.commit()
+            return jsonify({"status": "success"}), 200
+    
+    return jsonify({"status": "failed"}), 400
+
 
 
 @app.route('/add_comment/<int:article_id>', methods=['POST'])

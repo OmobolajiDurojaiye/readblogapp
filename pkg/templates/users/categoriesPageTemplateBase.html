@@ -114,7 +114,7 @@
   <body>
     <div class="navigator">
       <div class="navigator-item" id="profile">
-        <a href="">
+        <a href="/feed">
           <img
             src="{{url_for('static', filename='icons/home.png')}}"
             alt="home Icon"
@@ -238,7 +238,7 @@
       </form>
 
       <div class="tag">
-        <h2>popular:</h2>
+        <h2>Popular:</h2>
       </div>
       {%block popular%}
       <div class="popular">
@@ -279,7 +279,7 @@
       {%endblock popular%}
 
       <div class="tag">
-        <h2>recent:</h2>
+        <h2>Recent:</h2>
       </div>
       {%block recent%}
       <div class="recent">

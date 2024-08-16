@@ -9,7 +9,8 @@ class User(db.Model):
     name = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.String(255), nullable=True) 
+    profile_picture = db.Column(db.String(255), nullable=True)
+    articles_viewed = db.Column(db.Integer, default=0)
 
     @property
     def password(self):
@@ -21,6 +22,7 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
 
 
 class Admin(db.Model):

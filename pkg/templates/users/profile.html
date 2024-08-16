@@ -52,7 +52,7 @@
 
     <div class="navigator">
       <div class="navigator-item" id="profile">
-        <a href="">
+        <a href="/feed">
           <img
             src="{{url_for('static', filename='icons/home.png')}}"
             alt="home Icon"
@@ -188,7 +188,7 @@
 
         <div class="stats">
           <div class="stat-box">
-            <p class="stat-number">120</p>
+            <p class="stat-number">{{user.articles_viewed}}</p>
             <p class="stat-label">Articles Read</p>
           </div>
           <div class="stat-box">

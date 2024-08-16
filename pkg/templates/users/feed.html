@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical artices, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye" />
+    <meta name="author" content="Adeniyi Samuel" />
+    <!-- <meta name="author" content="Alabi Oluwatobiloba Ezekiel" /> -->
+    <title>Feed | Rēadmire</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/feed.css')}}"
+      type="text/css"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+
+  <body>
+    <div class="navigator">
+      <div class="navigator-item" id="profile">
+        <a href="/feed">
+          <img
+            src="{{url_for('static', filename='icons/home.png')}}"
+            alt="home Icon"
+          />
+          <p>Home</p>
+        </a>
+      </div>
+
+      <div class="navigator-item" id="categories">
+        <img
+          src="{{url_for('static', filename='icons/categories.png')}}"
+          alt="Categories Icon"
+        />
+        <p>Categories</p>
+        <div class="dropdown-menu" id="categoriesDropdown">
+          <div class="dropdown-item">
+            <a href="/general">
+              <img
+                src="{{url_for('static', filename='icons/general.png')}}"
+                alt="General Icon"
+              />
+              <p>General</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/technical">
+              <img
+                src="{{url_for('static', filename='icons/technical.png')}}"
+                alt="Technical Icon"
+              />
+              <p>Technical</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/food">
+              <img
+                src="{{url_for('static', filename='icons/food.png')}}"
+                alt="Food Icon"
+              />
+              <p>Food</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/conservation">
+              <img
+                src="{{url_for('static', filename='icons/conservation.png')}}"
+                alt="Conservation Icon"
+              />
+              <p>Conservation</p>
+            </a>
+          </div>
+
+          <div class="dropdown-item">
+            <a href="/health">
+              <img
+                src="{{url_for('static', filename='icons/health.png')}}"
+                alt="Health Icon"
+              />
+              <p>Health</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigator-item" id="profile">
+        {% if user %}
+        <a href="{{ url_for('profile', username=user.name) }}">
+          {% if user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+            alt="Profile Image"
+          />
+          {% else %}
+          <img
+            src="{{url_for('static', filename='icons/profile.png')}}"
+            alt="Profile Icon"
+          />
+          {%endif%}
+          <p>Profile</p>
+        </a>
+        {% else %}
+        <a href="{{ url_for('userSignup') }}">
+          <img
+            src="{{ url_for('static', filename='icons/signup.png') }}"
+            alt="Signup Icon"
+          />
+          <p>Signup</p>
+        </a>
+        {% endif %}
+      </div>
+
+      {% if user %}
+      <div class="navigator-item" id="logout">
+        <a href="{{ url_for('userLogout') }}">
+          <img
+            src="{{url_for('static', filename='icons/logout.png')}}"
+            alt="Logout Icon"
+          />
+          <p>Logout</p>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <main>
+      {%if user%}
+      <div class="latest-articles-carousel">
+        <div class="carousel-track">
+          {% for article in latest_articles %}
+          <a
+            href="{{ url_for('contentPage', title=article.title|replace(' ', '-')) }}"
+            class="carousel-item"
+          >
+            <img
+              src="{{ url_for('static', filename='uploads/' + (article.cover_image_url if article.cover_image_url else 'default.jpg')) }}"
+              alt="{{ article.title }} Cover Image"
+            />
+            <div class="article-title">{{ article.title }}</div>
+          </a>
+          {% endfor %}
+        </div>
+
+        <!-- Carousel Navigation Buttons -->
+        <div class="carousel-buttons">
+          <button class="carousel-prev">❮</button>
+          <button class="carousel-next">❯</button>
+        </div>
+      </div>
+
+      <div class="article-categories-section">
+        <!-- Conservation Category Section -->
+        <div class="article-category-box conservation">
+          <h2>Conservation</h2>
+          <div class="articles-container">
+            {% for post in conservation_articles %}
+            <a
+              href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+              class="article-box"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + (post.cover_image_url if post.cover_image_url else 'default.jpg')) }}"
+                alt="{{ post.title }}"
+              />
+
+              <div class="article-content">
+                <p class="article-category">{{ post.category }}</p>
+                <p class="article-title">{{ post.title }}</p>
+                <p class="article-date">
+                  Published: {{ post.created_at.strftime('%B %d, %Y') }}
+                </p>
+              </div>
+              {% endfor %}
+            </a>
+          </div>
+        </div>
+
+        <!-- General Category Section -->
+        <div class="article-category-box general">
+          <h2>General</h2>
+          <div class="articles-container">
+            {% for post in general_articles %}
+            <a
+              href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+              class="article-box"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + (post.cover_image_url if post.cover_image_url else 'default.jpg')) }}"
+                alt="{{ post.title }}"
+              />
+
+              <div class="article-content">
+                <p class="article-category">{{ post.category }}</p>
+                <p class="article-title">{{ post.title }}</p>
+                <p class="article-date">
+                  Published: {{ post.created_at.strftime('%B %d, %Y') }}
+                </p>
+              </div>
+              {% endfor %}
+            </a>
+          </div>
+        </div>
+
+        <!-- Food Category Section -->
+        <div class="article-category-box food">
+          <h2>Food</h2>
+          <div class="articles-container">
+            {% for post in food_articles %}
+            <a
+              href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+              class="article-box"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + (post.cover_image_url if post.cover_image_url else 'default.jpg')) }}"
+                alt="{{ post.title }}"
+              />
+
+              <div class="article-content">
+                <p class="article-category">{{ post.category }}</p>
+                <p class="article-title">{{ post.title }}</p>
+                <p class="article-date">
+                  Published: {{ post.created_at.strftime('%B %d, %Y') }}
+                </p>
+              </div>
+              {% endfor %}
+            </a>
+          </div>
+        </div>
+
+        <!-- Health Category Section -->
+        <div class="article-category-box food">
+          <h2>Health</h2>
+          <div class="articles-container">
+            {% for post in health_articles %}
+            <a
+              href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+              class="article-box"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + (post.cover_image_url if post.cover_image_url else 'default.jpg')) }}"
+                alt="{{ post.title }}"
+              />
+
+              <div class="article-content">
+                <p class="article-category">{{ post.category }}</p>
+                <p class="article-title">{{ post.title }}</p>
+                <p class="article-date">
+                  Published: {{ post.created_at.strftime('%B %d, %Y') }}
+                </p>
+              </div>
+              {% endfor %}
+            </a>
+          </div>
+        </div>
+
+        <!-- Technical Category Section -->
+        <div class="article-category-box food">
+          <h2>Technical</h2>
+          <div class="articles-container">
+            {% for post in technical_articles %}
+            <a
+              href="{{ url_for('contentPage', title=post.title|replace(' ', '-')) }}"
+              class="article-box"
+            >
+              <img
+                src="{{ url_for('static', filename='uploads/' + (post.cover_image_url if post.cover_image_url else 'default.jpg')) }}"
+                alt="{{ post.title }}"
+              />
+
+              <div class="article-content">
+                <p class="article-category">{{ post.category }}</p>
+                <p class="article-title">{{ post.title }}</p>
+                <p class="article-date">
+                  Published: {{ post.created_at.strftime('%B %d, %Y') }}
+                </p>
+              </div>
+              {% endfor %}
+            </a>
+          </div>
+        </div>
+      </div>
+      {%else%}
+      <div class="compel">
+        <h1>Welcome to Rēadmire!</h1>
+        <p>
+          Join us today and be part of an amazing community. Sign up to get
+          started and access exclusive features.
+        </p>
+        <a href="{{ url_for('userSignup') }}" class="cta-button">Sign Up Now</a>
+      </div>
+      {%endif%}
+
+      <div class="leaderboard">
+        <div class="top-5-articles">
+          <h2>Top 5 Articles of All Time</h2>
+          <div class="article-rankings">
+            {% for article in top_articles %}
+            <div class="ranking-item">
+              <div class="rank-number">{{ loop.index }}</div>
+              <div class="article-details">
+                <a
+                  href="{{ url_for('contentPage', title=article.title|replace(' ', '-')) }}"
+                >
+                  <img
+                    src="{{ url_for('static', filename='uploads/' + (article.cover_image_url if article.cover_image_url else 'default.jpg')) }}"
+                    alt="{{ article.title }}"
+                    class="article-image"
+                  />
+                  <div class="article-info">
+                    <p class="article-title">{{ article.title }}</p>
+                    <p class="article-views">{{ article.view_count }} views</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="top-5-users">
+          <h2>Top 5 Users</h2>
+          <div class="user-rankings">
+            {% for user in top_users %}
+            <div class="ranking-item">
+              <div class="rank-number">{{ loop.index }}</div>
+              <div class="user-details">
+                <a href="{{ url_for('profile', username=user.name) }}">
+                  {% if user.profile_picture %}
+                  <img
+                    src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+                    alt="Profile Image"
+                    class="user-image"
+                  />
+                  {% else %}
+                  <img
+                    src="{{url_for('static', filename='icons/profile.png')}}"
+                    alt="Profile Icon"
+                    class="user-image"
+                  />
+                  {%endif%}
+                  <div class="user-info">
+                    <p class="user-name">{{ user.name }}</p>
+                    <p class="user-posts">
+                      {{ user.articles_viewed }} articles read
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/carousel.js')}}"></script>
+    <script>
+      document
+        .getElementById("categories")
+        .addEventListener("click", function () {
+          document
+            .getElementById("categoriesDropdown")
+            .classList.toggle("active");
+        });
+    </script>
+  </body>
+</html>

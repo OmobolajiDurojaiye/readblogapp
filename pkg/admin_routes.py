@@ -21,7 +21,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/admin/login/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']

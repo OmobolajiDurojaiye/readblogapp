@@ -120,7 +120,7 @@
 
     <div class="navigator">
       <div class="navigator-item" id="profile">
-        <a href="">
+        <a href="/feed">
           <img
             src="{{url_for('static', filename='icons/home.png')}}"
             alt="home Icon"
@@ -453,7 +453,44 @@
       </div>
     </div>
     
-       
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          let userHasSpentOneMinute = false;
+      
+          setTimeout(function() {
+              userHasSpentOneMinute = true;
+              trackUserView();
+          }, 60000); // 60 seconds
+      
+          function trackUserView() {
+              if (userHasSpentOneMinute) {
+                  fetch("{{ url_for('track_article_view', article_id=article.id) }}", {
+                      method: "GET",
+                      headers: {
+                          "X-CSRFToken": "{{ csrf_token() }}"
+                      }
+                  })
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error("Network response was not ok");
+                      }
+                      return response.json();
+                  })
+                  .then(data => {
+                      if (data.status === 'success') {
+                          console.log('User view tracked successfully.');
+                      } else {
+                          console.error('Failed to track user view.');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('There was a problem with the fetch operation:', error);
+                  });
+              }
+          }
+      });
+    </script>
+    
     <script>
       document
         .getElementById("categories")
