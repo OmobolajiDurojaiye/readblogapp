@@ -13,11 +13,12 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-}
-
-body {
   background-color: #0b0c10 !important;
   color: #fff !important;
+}
+
+main {
+  padding-bottom: 20vh;
 }
 
 /* Flash message container */
@@ -47,7 +48,7 @@ body {
 .top {
   width: 100%;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid hsl(0, 0%, 87%);
   border-radius: 12px;
   /* background-color: #fff; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -146,6 +147,89 @@ body {
 .stat-label {
   font-size: 14px;
   color: #797676;
+}
+
+/* Bottom Section Styling */
+.bottom {
+  width: 100%;
+  padding: 20px;
+  /* border: 1px solid hsl(0, 0%, 87%); */
+  border-radius: 12px;
+  margin-top: 20px;
+  /* background-color: hsl(210, 22%, 16%); */
+}
+
+/* Head Styling */
+.bottom .head h2 {
+  color: #fff;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Tools Container */
+.tools-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Tool Item */
+.tool-item {
+  display: flex;
+  align-items: center;
+  background-color: hsl(0, 0%, 96%);
+  padding: 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  width: 32%;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.tool-item:hover {
+  background-color: hsl(210, 22%, 22%);
+  transform: scale(1.05);
+}
+
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.tool-label {
+  font-size: 1.2em;
+  color: hsl(210, 22%, 16%);
+  font-weight: 500;
+}
+
+.tool-item:hover .tool-label {
+  color: #fff;
+}
+
+/* Responsive Design: For tablets and small screens */
+@media (max-width: 1024px) {
+  .tool-item {
+    width: 48%;
+  }
+}
+
+/* Responsive Design: For mobile screens */
+@media (max-width: 600px) {
+  .tool-item {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .tool-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .tool-label {
+    font-size: 1.1em;
+  }
 }
 
 /*navigator*/

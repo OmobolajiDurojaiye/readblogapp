@@ -26,7 +26,7 @@ function autoSlide() {
     const currentSlide = track.querySelector(".current-slide");
     const nextSlide = slides[slideIndex];
     moveToSlide(track, currentSlide, nextSlide);
-  }, 5000); // Adjust the time interval (5000ms = 5 seconds)
+  }, 5000);
 }
 
 nextButton.addEventListener("click", () => {

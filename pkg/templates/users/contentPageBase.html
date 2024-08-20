@@ -261,7 +261,7 @@
         <div class="article">
           <img
             src="{{ url_for('static', filename='uploads/' + article.cover_image_url) }}"
-            alt="Cover Image"
+            alt="{{article.title}}"
           />
           <div class="category">
             <a href="/{{ article.category }}"> {{ article.category }} </a>

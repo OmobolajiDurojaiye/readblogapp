@@ -1,0 +1,162 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  list-style-type: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0b0c10;
+  color: #fff;
+  padding: 50px;
+}
+
+/* Back button */
+.back-btn {
+  margin: 20px;
+  background-color: #45a29e;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #66fcf1;
+}
+
+/* Podium */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1f2833;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100px;
+  position: relative;
+  text-align: center;
+}
+
+.podium-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.podium-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.podium-item p {
+  font-size: 0.9rem;
+  color: #66fcf1;
+}
+
+/* First place in the middle, taller */
+.first-place {
+  height: 250px;
+  order: 2; /* Ensures first place is centered */
+}
+
+/* Second and third places flanking the first */
+.second-place {
+  height: 220px;
+  order: 1; /* Positioned to the left of first place */
+}
+
+.third-place {
+  height: 200px;
+  order: 3; /* Positioned to the right of first place */
+}
+
+/* Styling for the positions */
+.first-place h3 {
+  color: gold;
+}
+
+.second-place h3 {
+  color: silver;
+}
+
+.third-place h3 {
+  color: #cd7f32; /* Bronze */
+}
+
+/* Readers List */
+.readers-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+
+.reader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f2833;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.reader img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.reader h4 {
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+.reader p {
+  color: #66fcf1;
+  font-size: 0.9rem;
+}
+
+.reader .position {
+  color: #fff;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .podium-item {
+    width: 100px;
+    padding: 15px;
+  }
+
+  .reader {
+    padding: 10px;
+  }
+
+  .reader p {
+    font-size: 0.85rem;
+  }
+}

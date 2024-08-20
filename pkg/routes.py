@@ -19,6 +19,26 @@ def allowed_file(filename):
 def not_found_error(error):
     return render_template('page404.html')
 
+@app.errorhandler(400)
+def bad_request_error(error):
+    return render_template('page400.html'), 400
+
+
+@app.errorhandler(403)
+def forbidden_error(error):
+    return render_template('page403.html'), 403
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('page500.html'), 500
+
+
+@app.errorhandler(503)
+def service_unavailable_error(error):
+    return render_template('page503.html'), 503
+
+
 @app.route('/', methods=['GET'])
 @app.route('/index/', methods=['GET'])
 def index():
@@ -131,9 +151,6 @@ def feed():
                            user=user)
 
 
-
-
-
 @app.route('/user-profile/<username>/')
 def profile(username):
     if 'user_id' not in session:
@@ -164,8 +181,7 @@ def update_profile_picture(username):
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Update user profile picture filename in the database
-        user.profile_picture = filename  # Add this field to your User model
+        user.profile_picture = filename
         db.session.commit()
         flash('Profile picture updated successfully!')
     else:
@@ -313,3 +329,12 @@ def subscribe():
             db.session.commit()
             flash('You have successfully subscribed!')
     return redirect(url_for('index'))
+
+@app.route('/leaderboard')
+def leaderboard():
+    top_users = User.query.order_by(User.articles_viewed.desc()).limit(10).all()  # top 10 users
+
+    podium_users = top_users[:3]
+    other_users = top_users[3:]
+
+    return render_template('users/leaderboard.html', podium_users=podium_users, other_users=other_users)

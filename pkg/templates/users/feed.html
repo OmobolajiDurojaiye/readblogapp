@@ -385,16 +385,7 @@
           </div>
         </div>
       </div>
-      {%else%}
-      <div class="compel">
-        <h1>Welcome to Rēadmire!</h1>
-        <p>
-          Join us today and be part of an amazing community. Sign up to get
-          started and access exclusive features.
-        </p>
-        <a href="{{ url_for('userSignup') }}" class="cta-button">Sign Up Now</a>
-      </div>
-      {%endif%}
+      
 
       <div class="leaderboard">
         <div class="top-5-articles">
@@ -424,13 +415,13 @@
         </div>
 
         <div class="top-5-users">
-          <h2>Top 5 Users</h2>
+          <h2>Top 5 Users of All Time</h2>
           <div class="user-rankings">
             {% for user in top_users %}
             <div class="ranking-item">
               <div class="rank-number">{{ loop.index }}</div>
               <div class="user-details">
-                <a href="{{ url_for('profile', username=user.name) }}">
+                <p class="users-conts-deets">
                   {% if user.profile_picture %}
                   <img
                     src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
@@ -450,13 +441,23 @@
                       {{ user.articles_viewed }} articles read
                     </p>
                   </div>
-                </a>
+                </p>
               </div>
             </div>
             {% endfor %}
           </div>
         </div>
       </div>
+      {%else%}
+      <div class="compel">
+        <h1>Welcome to Rēadmire!</h1>
+        <p>
+          Join us today and be part of an amazing community. Sign up to get
+          started and access exclusive features.
+        </p>
+        <a href="{{ url_for('userSignup') }}" class="cta-button">Sign Up Now</a>
+      </div>
+      {%endif%}
     </main>
     <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/carousel.js')}}"></script>

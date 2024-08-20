@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical articles, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye, Adeniyi Samuel" />
+    <title>Leaderboard | Rēadmire</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/leaderboard.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <!-- Back button -->
+    <button class="back-btn" onclick="history.back()">← Back</button>
+
+    <!-- Podium for top 3 readers -->
+    <div class="podium">
+      {% for user in podium_users %}
+      <div
+        class="podium-item {{ loop.index0 == 0 and 'first-place' or (loop.index0 == 1 and 'second-place' or 'third-place') }}"
+        data-aos="fade-up"
+      >
+        {% if user.profile_picture %}
+        <img
+          src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+          alt="Profile Image"
+          class="profile-image"
+          id="profileImage"
+        />
+        {% else %}
+        <img
+          src="{{ url_for('static', filename='icons/profile.png') }}"
+          alt="Profile Image"
+          class="profile-image"
+          id="profileImage"
+        />
+        {% endif %}
+        <h3>{{ loop.index0 + 1 }} Place</h3>
+        <p>{{ user.name }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Readers list from 4th position onwards -->
+    <div class="readers-list" data-aos="fade-up">
+      {% for user in other_users %}
+      <div class="reader">
+        <div class="reader-info">
+          {% if user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}"
+            alt="Profile Image"
+            class="profile-image"
+            id="profileImage"
+          />
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='icons/profile.png') }}"
+            alt="Profile Image"
+            class="profile-image"
+            id="profileImage"
+          />
+          {% endif %}
+          <h4>{{ user.name }}</h4>
+        </div>
+        <p class="position">
+          {{ loop.index + 3 }}th - {{ user.articles_viewed }} Articles
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>

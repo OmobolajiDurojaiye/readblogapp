@@ -192,9 +192,44 @@
             <p class="stat-label">Articles Read</p>
           </div>
           <div class="stat-box">
-            <p class="stat-number">45</p>
+            <p class="stat-number">0</p>
             <p class="stat-label">Comments Made</p>
           </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="head">
+          <h2>Tools</h2>
+        </div>
+        <div class="tools-container">
+          <!-- Leaderboard -->
+          <a href="/leaderboard" class="tool-item">
+            <img
+              src="{{ url_for('static', filename='icons/leaderboard.png') }}"
+              alt="Leaderboard"
+              class="tool-icon"
+            />
+            <p class="tool-label">Leaderboard</p>
+          </a>
+          <!-- Social Media Recognition -->
+          <a href="/social-recognition" class="tool-item">
+            <img
+              src="{{ url_for('static', filename='icons/recognition.png') }}"
+              alt="Social Media Recognition"
+              class="tool-icon"
+            />
+            <p class="tool-label">Social Media Recognition</p>
+          </a>
+          <!-- Contact Us / Report a Bug -->
+          <a href="/contact-us" class="tool-item">
+            <img
+              src="{{ url_for('static', filename='icons/report-a-bug.png') }}"
+              alt="Contact Us / Report a Bug"
+              class="tool-icon"
+            />
+            <p class="tool-label">Contact Us / Report a Bug</p>
+          </a>
         </div>
       </div>
     </main>
