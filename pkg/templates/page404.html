@@ -80,6 +80,7 @@
         font-weight: bold;
         margin-top: 20px;
         display: inline-block;
+        cursor: pointer;
         transition: background-color 0.3s ease;
       }
 
@@ -98,7 +99,7 @@
         changed, or is temporarily unavailable.
       </p>
       <p class="warning">Try searching for the article you're looking for.</p>
-      <a href="/">Go to homepage</a>
+      <a onclick="history.back()">← Back</a>
     </div>
     {%endblock container%}
   </body>

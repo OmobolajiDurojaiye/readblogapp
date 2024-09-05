@@ -77,10 +77,15 @@ def userSignup():
         email = request.form['email']
         password = request.form['password']
 
+        existing_name = User.query.filter_by(name = name).first()
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             flash('Email address already exists. Please log in.')
             return redirect(url_for('userLogin'))
+        
+        if existing_name:
+            flash('Name already exists. Please use another.')
+            return redirect(url_for('userSignup'))
 
         new_user = User(name=name, email=email)
         new_user.password = password 
@@ -208,12 +213,20 @@ def contentPage(title):
 
     video_name = article.video_name if article.video_name else 'default'
 
-    comments = Comment.query.filter_by(article_id=article.id).order_by(Comment.created_at.desc()).all()
+    # Fetch the newest five comments
+    newest_five_comments = Comment.query.filter_by(article_id=article.id).order_by(Comment.created_at.desc()).limit(5).all()
 
     user_id = session.get('user_id')
     user = User.query.get(user_id) if user_id else None
 
-    return render_template('users/contentPageBase.html', article=article, related_articles=related_articles, video_name=video_name, comments=comments, user=user)
+    return render_template('users/contentPageBase.html', 
+                           article=article, 
+                           related_articles=related_articles, 
+                           video_name=video_name, 
+                           comments=newest_five_comments,  # pass only the 5 newest comments
+                           user=user)
+
+
 
 @app.route('/track_article_view/<int:article_id>/', methods=['GET'])
 def track_article_view(article_id):
@@ -231,20 +244,51 @@ def track_article_view(article_id):
     
     return jsonify({"status": "failed"}), 400
 
+def get_article_by_id(article_id):
+    return Post.query.filter_by(id=article_id).first()
+
+def get_comments_for_article(article_id):
+    return Comment.query.filter_by(article_id=article_id).order_by(Comment.created_at.desc()).all()
 
 
-@app.route('/add_comment/<int:article_id>', methods=['POST'])
-def add_comment(article_id):
-    name = request.form.get('name')
-    email = request.form.get('email')
+@app.route('/comment/<int:article_id>', methods=['GET', 'POST'])
+def commentPage(article_id):
+    article = get_article_by_id(article_id)
+    comments = get_comments_for_article(article_id)
+    
+    return render_template('users/commentPage.html', article=article, comments=comments)
+
+
+@app.route('/comment/<int:article_id>/post', methods=['POST'])
+def post_comment(article_id):
+    if 'user_id' not in session:
+        flash("You must be logged in to post a comment.", "warning")
+        return redirect(url_for('userLogin'))
+    
     comment_text = request.form.get('comment')
+    
+    # Debugging: Check if comment_text is being retrieved correctly
+    if not comment_text:
+        flash("Comment cannot be empty.", "danger")
+        return redirect(url_for('commentPage', article_id=article_id))
+    
+    try:
+        new_comment = Comment(
+            comment=comment_text,
+            article_id=article_id,
+            user_id=session['user_id']
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        flash("Comment posted successfully!", "success")
+    except Exception as e:
+        db.session.rollback()  # Rollback in case of error
+        flash(f"An error occurred: {str(e)}", "danger")
+    
+    return redirect(url_for('commentPage', article_id=article_id))
 
-    new_comment = Comment(name=name, email=email, comment=comment_text, article_id=article_id)
-    db.session.add(new_comment)
-    db.session.commit()
 
-    flash('Your comment has been added!', 'success')
-    return redirect(url_for('contentPage', title=Post.query.get_or_404(article_id).title))
+
 
 
 # @app.route('/categories/')

@@ -293,6 +293,22 @@ main {
   color: #888;
 }
 
+/*more*/
+.more {
+  width: max-content;
+  padding: 5px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.more a {
+  color: #fff;
+}
+
 /* Hover effects for article boxes */
 .article-box:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);

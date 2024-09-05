@@ -30,6 +30,7 @@
   border-radius: 20px;
   background-color: #66fcf1;
   transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
 }
 
 .home-link:hover {

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Rēadmire, blogs, blogging platform, diverse ideas, articles, health articles, Conservation articles, technical articles, creativity, reader engagement, knowledge sharing, sign up, engaging articles, get food recipes"
+    />
+    <meta
+      name="description"
+      content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
+    />
+    <meta name="author" content="Omobolaji Durojaiye" />
+    <meta name="author" content="Adeniyi Samuel" />
+    <title>Comments | Rēadmire</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/commentPage.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{url_for('static', filename='/apple-icon-57x57.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{url_for('static', filename='/apple-icon-60x60.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{url_for('static', filename='/apple-icon-72x72.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{url_for('static', filename='/apple-icon-76x76.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{url_for('static', filename='/apple-icon-114x114.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{url_for('static', filename='/apple-icon-120x120.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{url_for('static', filename='/apple-icon-144x144.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{url_for('static', filename='/apple-icon-152x152.png')}}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{url_for('static', filename='/favicon-32x32.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{url_for('static', filename='/favicon-96x96.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{url_for('static', filename='/favicon-16x16.png')}}"
+    />
+    <link
+      rel="manifest"
+      href="{{url_for('static', filename='/manifest.json')}}"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <div class="container">
+      <h3>Comments</h3>
+      <div class="comments-section">
+        <!-- Dynamically Load Comments -->
+        {% if comments %} {% for comment in comments %}
+        <div class="comment-box">
+          <img
+            src="{{ url_for('static', filename='uploads/' + comment.user.profile_picture) }}"
+            alt="Profile Picture"
+            class="profile-pic"
+          />
+          <div class="comment-content">
+            <div class="comment-header">
+              <span class="username">{{ comment.user.name }}</span>
+            </div>
+            <div class="comment-body">{{ comment.comment }}</div>
+            <div class="comment-footer">
+              <span class="date">
+                {{ comment.created_at.strftime('%B %d, %Y, %I:%M %p') }}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+        {% endif %}
+      </div>
+
+      <!-- Comment input form, fixed at bottom -->
+      {% if 'user_id' in session %}
+      <div class="comment-input">
+        <form
+          action="{{ url_for('post_comment', article_id=article.id) }}"
+          method="POST"
+        >
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
+          <div class="input-group">
+            <textarea
+              name="comment"
+              class="form-control"
+              rows="1"
+              placeholder="Write a comment..."
+              required
+            ></textarea>
+            <button type="submit" class="btn btn-send">
+              <img
+                src="{{ url_for('static', filename='icons/send-icon.png') }}"
+                alt="Send"
+              />
+            </button>
+          </div>
+        </form>
+      </div>
+      {% else %}
+      <p class="text-muted">
+        Please <a href="{{ url_for('userLogin') }}">log in</a> to post a
+        comment.
+      </p>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  list-style-type: none;
+}
+
+body {
+  background-color: #0b0c10 !important;
+  color: #66fcf1 !important;
+}
+
+/* Flash message container */
+.flashMessageContainerDisplay {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #45a29e;
+  color: #0b0c10;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  padding-bottom: 70px; /* To make space for the input form */
+  overflow-y: auto;
+}
+
+.comments-section {
+  padding: 20px;
+}
+
+.comment-box {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #1f2833; /* Darker for contrast */
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-content {
+  background-color: #45a29e; /* Complementary to main color */
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+}
+
+.comment-header .username {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #66fcf1;
+  display: block;
+}
+
+.comment-body {
+  margin-bottom: 5px;
+}
+
+.comment-footer .date {
+  font-size: 0.8em;
+  color: #c5c6c7;
+}
+
+.comment-input {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1f2833; /* Darker background */
+  padding: 10px;
+  border-top: 1px solid #66fcf1;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-control {
+  flex: 1;
+  border-radius: 20px;
+  border: 1px solid #66fcf1;
+  padding: 10px;
+  background-color: #0b0c10;
+  color: #66fcf1;
+}
+
+.btn-send {
+  background: none;
+  border: none;
+  margin-left: 10px;
+}
+
+.btn-send img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
