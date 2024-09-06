@@ -443,9 +443,9 @@
         </div>
         
         <!-- Link to all comments page -->
-        <a href="{{ url_for('commentPage', article_id=article.id) }}" class="view-all-comments">
+        <a href="{{ url_for('commentPage', title=article.title.replace(' ', '-')) }}" class="view-all-comments">
           View all comments
-        </a>
+        </a>      
       </div>
     </div>
     

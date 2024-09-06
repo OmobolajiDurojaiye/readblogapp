@@ -39,6 +39,13 @@ def service_unavailable_error(error):
     return render_template('page503.html'), 503
 
 
+import re
+
+def slugify(title):
+    return re.sub(r'\W+', '-', title.lower())
+
+
+
 @app.route('/', methods=['GET'])
 @app.route('/index/', methods=['GET'])
 def index():
@@ -163,7 +170,12 @@ def profile(username):
         return redirect(url_for('userLogin'))
 
     user = User.query.filter_by(name=username).first_or_404()
-    return render_template('users/profile.html', user=user)
+    
+    # Count the number of comments the user has made
+    comments_made_count = Comment.query.filter_by(user_id=user.id).count()
+
+    return render_template('users/profile.html', user=user, comments_made_count=comments_made_count)
+
 
 @app.route('/update-profile-picture/<username>/', methods=['POST'])
 def update_profile_picture(username):
@@ -244,38 +256,43 @@ def track_article_view(article_id):
     
     return jsonify({"status": "failed"}), 400
 
-def get_article_by_id(article_id):
-    return Post.query.filter_by(id=article_id).first()
+# Function to get an article by title
+def get_article_by_title(article_title):
+    title = article_title.replace('-', ' ')
+    return Post.query.filter_by(title=title).first_or_404()
 
+# Function to get comments for an article by its id
 def get_comments_for_article(article_id):
     return Comment.query.filter_by(article_id=article_id).order_by(Comment.created_at.desc()).all()
 
-
-@app.route('/comment/<int:article_id>', methods=['GET', 'POST'])
-def commentPage(article_id):
-    article = get_article_by_id(article_id)
-    comments = get_comments_for_article(article_id)
+# Route to access the comment page using the article title
+@app.route('/comment/<title>', methods=['GET', 'POST'])
+def commentPage(title):
+    article = get_article_by_title(title)
+    comments = get_comments_for_article(article.id)
     
     return render_template('users/commentPage.html', article=article, comments=comments)
 
 
-@app.route('/comment/<int:article_id>/post', methods=['POST'])
-def post_comment(article_id):
+
+@app.route('/comment/<title>/post', methods=['POST'])
+def post_comment(title):
     if 'user_id' not in session:
         flash("You must be logged in to post a comment.", "warning")
         return redirect(url_for('userLogin'))
     
     comment_text = request.form.get('comment')
     
-    # Debugging: Check if comment_text is being retrieved correctly
     if not comment_text:
         flash("Comment cannot be empty.", "danger")
-        return redirect(url_for('commentPage', article_id=article_id))
+        return redirect(url_for('commentPage', title=title))
+    
+    article = get_article_by_title(title)
     
     try:
         new_comment = Comment(
             comment=comment_text,
-            article_id=article_id,
+            article_id=article.id,
             user_id=session['user_id']
         )
         db.session.add(new_comment)
@@ -285,7 +302,8 @@ def post_comment(article_id):
         db.session.rollback()  # Rollback in case of error
         flash(f"An error occurred: {str(e)}", "danger")
     
-    return redirect(url_for('commentPage', article_id=article_id))
+    return redirect(url_for('commentPage', title=title))
+
 
 
 
@@ -376,9 +394,25 @@ def subscribe():
 
 @app.route('/leaderboard')
 def leaderboard():
-    top_users = User.query.order_by(User.articles_viewed.desc()).limit(10).all()  # top 10 users
+    # Fetch all users and calculate their scores
+    users = User.query.all()
 
-    podium_users = top_users[:3]
-    other_users = top_users[3:]
+    user_scores = []
+    for user in users:
+        # Get the number of comments made by this user
+        comment_count = Comment.query.filter_by(user_id=user.id).count()
+
+        # Calculate the total score (adjust the weighting as needed)
+        score = user.articles_viewed + (2 * comment_count)
+
+        # Append the user and their score to the list
+        user_scores.append((user, score))
+
+    # Sort the users by their score in descending order
+    user_scores.sort(key=lambda x: x[1], reverse=True)
+
+    # Split the top users for the podium and others
+    podium_users = [x[0] for x in user_scores[:3]]
+    other_users = [x[0] for x in user_scores[3:]]
 
     return render_template('users/leaderboard.html', podium_users=podium_users, other_users=other_users)

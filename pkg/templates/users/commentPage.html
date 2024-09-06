@@ -114,6 +114,17 @@
 
     <div class="container">
       <h3>Comments</h3>
+
+      <!-- Go Back to Article Button -->
+      <div class="back-to-article">
+        <a
+          href="{{ url_for('contentPage', title=article.title|replace(' ', '-') ) }}"
+          class="btn-back-to-article"
+        >
+          &larr; Go Back to Article
+        </a>
+      </div>
+
       <div class="comments-section">
         <!-- Dynamically Load Comments -->
         {% if comments %} {% for comment in comments %}
@@ -136,7 +147,9 @@
           </div>
         </div>
         {% endfor %} {% else %}
-        <p>No comments yet. Be the first to comment!</p>
+        <p style="text-align: center">
+          No comments yet. Be the first to comment!
+        </p>
         {% endif %}
       </div>
 
@@ -144,7 +157,7 @@
       {% if 'user_id' in session %}
       <div class="comment-input">
         <form
-          action="{{ url_for('post_comment', article_id=article.id) }}"
+          action="{{ url_for('post_comment', title=article.title.replace(' ', '-')) }}"
           method="POST"
         >
           <input type="hidden" name="csrf_token" value="{{csrf_token()}}" />
@@ -166,7 +179,7 @@
         </form>
       </div>
       {% else %}
-      <p class="text-muted">
+      <p style="text-align: center" class="text-muted">
         Please <a href="{{ url_for('userLogin') }}">log in</a> to post a
         comment.
       </p>
