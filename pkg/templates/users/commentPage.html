@@ -113,7 +113,7 @@
     </div>
 
     <div class="container">
-      <h3>Comments</h3>
+      <h3 style="margin: 2vh">Comments</h3>
 
       <!-- Go Back to Article Button -->
       <div class="back-to-article">
@@ -129,11 +129,19 @@
         <!-- Dynamically Load Comments -->
         {% if comments %} {% for comment in comments %}
         <div class="comment-box">
+          {% if comment.user.profile_picture %}
           <img
             src="{{ url_for('static', filename='uploads/' + comment.user.profile_picture) }}"
             alt="Profile Picture"
             class="profile-pic"
           />
+          {% else %}
+          <img
+            src="{{url_for('static', filename='icons/profile.png')}}"
+            alt="Profile Icon"
+            class="profile-pic"
+          />
+          {%endif%}
           <div class="comment-content">
             <div class="comment-header">
               <span class="username">{{ comment.user.name }}</span>
@@ -143,11 +151,46 @@
               <span class="date">
                 {{ comment.created_at.strftime('%B %d, %Y, %I:%M %p') }}
               </span>
+
+              <!-- Like Button -->
+              <form
+                action="{{ url_for('like_comment', comment_id=comment.id) }}"
+                method="POST"
+                class="like-form"
+              >
+                <input
+                  type="hidden"
+                  name="csrf_token"
+                  value="{{ csrf_token() }}"
+                />
+                <button
+                  type="submit"
+                  class="btn-like"
+                  aria-label="Like this comment"
+                >
+                  <img
+                    src="{{ url_for('static', filename='icons/like-icon.png') }}"
+                    alt="Like"
+                  />
+                  <span class="like-text">Like</span>
+                </button>
+              </form>
+
+              <!-- Display Liked Users -->
+              <div class="liked-users">
+                {% for like in comment.likes %}
+                <img
+                  src="{{ url_for('static', filename='uploads/' + like.user.profile_picture) }}"
+                  alt="Liked User"
+                  class="liked-user-pic"
+                />
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
         {% endfor %} {% else %}
-        <p style="text-align: center">
+        <p style="text-align: center; margin-top: 20vh">
           No comments yet. Be the first to comment!
         </p>
         {% endif %}

@@ -15,3 +15,7 @@
   border: 1px solid #66fcf1;
   z-index: 999;
 }
+
+.flash-message {
+  font-size: 0.8em;
+}

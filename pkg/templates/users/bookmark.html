@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Articles</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bookmark.css') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='apple-icon-180x180.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{ url_for('static', filename='android-icon-192x192.png') }}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+    <!-- Back Button -->
+    <button class="back-button" onclick="history.back()">← Back</button>
+    <section class="bookmark-container">
+      <h1 class="page-title">Your Saved Articles</h1>
+      {% for article in saved_articles %}
+      <div class="bookmark-card" data-aos="fade-up">
+        <img
+          src="{{ url_for('static', filename='uploads/' + article.cover_image_url) }}"
+          alt=""
+        />
+        <h2 class="bookmark-title">{{ article.title }}</h2>
+        <p class="bookmark-excerpt">{{ article.description[:100] }}...</p>
+        <a
+          href="{{ url_for('contentPage', title=article.title) }}"
+          class="read-more-btn"
+          >View</a
+        >
+        <form
+          action="{{ url_for('remove_bookmark', post_id=article.id) }}"
+          method="post"
+          style="display: inline"
+        >
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <button type="submit" class="remove-btn read-more-btn">Remove</button>
+        </form>
+      </div>
+      {% endfor %} {% if not saved_articles %}
+      <p>
+        <img src="{{url_for('static', filename='images/empty.png')}}" alt="" />
+      </p>
+      {% endif %}
+    </section>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
+  </body>
+</html>

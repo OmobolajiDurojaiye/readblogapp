@@ -14,18 +14,42 @@ body {
   color: #333;
 }
 
-.back-button {
+/* Flash message container */
+.flashMessageContainerDisplay {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #45a29e;
+  color: #0b0c10;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  font-size: 0.8em;
+}
+
+.back-arrow {
   position: absolute;
-  top: 20px;
   left: 10px;
+  top: 10px;
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
   background: rgba(197, 192, 192, 0.5);
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s;
+  cursor: pointer;
+  color: #66fcf1;
+  z-index: 999;
+  border: none;
 }
 
 /* Background video */
@@ -202,6 +226,9 @@ body {
 .comment {
   height: max-content;
   width: max-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .comment .commentButton {
@@ -215,6 +242,35 @@ body {
 
 .comment .commentButton span {
   color: #fff;
+}
+
+.bookmark-btn {
+  background-color: #3a3c44;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 10px;
+}
+
+.bookmark-btn:hover {
+  background-color: #66fcf1;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bookmark-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
 }
 
 .modal {
@@ -343,18 +399,16 @@ body {
   height: max-content;
   width: 100%;
   padding: 20px 0 20px 10px;
-  background: #0b0c10;
   color: #66fcf1;
-  border-left: 10px solid saddlebrown;
+  border-left: 5px solid saddlebrown;
 }
 
 .content h3 {
   height: max-content;
   width: 100%;
   padding: 10px 0 10px 10px;
-  background: #0b0c10;
   color: #66fcf1;
-  border-left: 10px solid sandybrown;
+  border-left: 5px solid sandybrown;
 }
 
 .content img {

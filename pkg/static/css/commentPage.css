@@ -20,7 +20,7 @@ body {
   transform: translateX(-50%);
   background-color: #45a29e;
   color: #0b0c10;
-  padding: 15px 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-weight: bolder;
@@ -32,7 +32,7 @@ body {
 
 /* Flash message individual style */
 .flash-message {
-  margin-bottom: 10px;
+  font-size: 0.8em;
 }
 
 .container {
@@ -116,6 +116,75 @@ body {
   background-color: #1f2833; /* Darker background */
   padding: 10px;
   border-top: 1px solid #66fcf1;
+}
+
+/* Comment Like Button */
+/* Like Button Styling */
+.btn-like {
+  background: #66fcf1; /* Main color for a modern touch */
+  border: 2px solid transparent; /* Border to enhance the button */
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.btn-like img {
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
+  transition: transform 0.3s;
+}
+
+.btn-like .like-text {
+  font-size: 0.9em;
+  color: #0b0c10;
+  font-weight: bold;
+}
+
+/* Hover and Focus States */
+.btn-like:hover,
+.btn-like:focus {
+  background-color: #45a29e; /* Darker shade for hover effect */
+  border-color: #66fcf1;
+}
+
+.btn-like:hover img,
+.btn-like:focus img {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+@media (max-width: 600px) {
+  .btn-like {
+    padding: 6px 10px;
+  }
+
+  .btn-like img {
+    height: 18px;
+    width: 18px;
+    margin-right: 6px;
+  }
+
+  .btn-like .like-text {
+    font-size: 0.8em;
+  }
+}
+
+/* Liked Users Display */
+.liked-users {
+  display: flex;
+  margin-top: 10px;
+}
+
+.liked-user-pic {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 .input-group {

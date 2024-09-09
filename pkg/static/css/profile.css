@@ -29,7 +29,7 @@ main {
   transform: translateX(-50%);
   background-color: #45a29e;
   color: #0b0c10;
-  padding: 15px 20px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-weight: bolder;
@@ -41,7 +41,7 @@ main {
 
 /* Flash message individual style */
 .flash-message {
-  margin-bottom: 10px;
+  font-size: 0.8em;
 }
 
 /* User profile details */

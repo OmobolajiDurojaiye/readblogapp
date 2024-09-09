@@ -23,8 +23,6 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
-
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
@@ -44,6 +42,20 @@ class Post(db.Model):
     youtube_link = db.Column(db.String(255), nullable=True)
     video_name = db.Column(db.String(255), nullable=True) 
 
+class Subscriber(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    date_subscribed = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Bookmark(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref='bookmarks')
+    post = db.relationship('Post', backref='bookmarked_by')
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text, nullable=False)
@@ -53,10 +65,13 @@ class Comment(db.Model):
 
     user = db.relationship('User', backref='comments')
     post = db.relationship('Post', backref='comments')
+    likes = db.relationship('Like', backref='comment_like', cascade="all, delete-orphan")  # Changed backref name
 
-
-
-class Subscriber(db.Model):
+class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    date_subscribed = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref='likes')
+    comment = db.relationship('Comment', backref='likes_on_comment')  # Changed backref name

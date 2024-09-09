@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from pkg import app
-from pkg.models import db, Post, Subscriber, Comment, User
+from pkg.models import db, Post, Subscriber, Comment, User, Bookmark, Like
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 UPLOAD_FOLDER = 'static/uploads/'
@@ -227,6 +227,7 @@ def contentPage(title):
 
     # Fetch the newest five comments
     newest_five_comments = Comment.query.filter_by(article_id=article.id).order_by(Comment.created_at.desc()).limit(5).all()
+    comments_numbers = Comment.query.filter_by(article_id=article.id).all()
 
     user_id = session.get('user_id')
     user = User.query.get(user_id) if user_id else None
@@ -236,7 +237,9 @@ def contentPage(title):
                            related_articles=related_articles, 
                            video_name=video_name, 
                            comments=newest_five_comments,  # pass only the 5 newest comments
-                           user=user)
+                           user=user,
+                           comments_numbers = comments_numbers)
+
 
 
 
@@ -273,8 +276,6 @@ def commentPage(title):
     
     return render_template('users/commentPage.html', article=article, comments=comments)
 
-
-
 @app.route('/comment/<title>/post', methods=['POST'])
 def post_comment(title):
     if 'user_id' not in session:
@@ -305,8 +306,40 @@ def post_comment(title):
     return redirect(url_for('commentPage', title=title))
 
 
+def get_article_by_comment_id(comment_id):
+    comment = Comment.query.get(comment_id)
+    if comment:
+        post = Post.query.get(comment.article_id)
+        if post:
+            return post.title.replace(' ', '-')
+    return ''
 
+@app.route('/comment/<int:comment_id>/like', methods=['POST'])
+def like_comment(comment_id):
+    if 'user_id' not in session:
+        flash("You must be logged in to like a comment.", "warning")
+        return redirect(url_for('userLogin'))
 
+    user_id = session['user_id']
+
+    # Check if the user has already liked the comment
+    existing_like = Like.query.filter_by(user_id=user_id, comment_id=comment_id).first()
+
+    if existing_like:
+        flash("You have already liked this comment.", "info")
+    else:
+        try:
+            new_like = Like(user_id=user_id, comment_id=comment_id)
+            db.session.add(new_like)
+            db.session.commit()
+            flash("Comment liked successfully!", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred: {str(e)}", "danger")
+
+    # Ensure get_article_by_comment_id() works correctly
+    article_title = get_article_by_comment_id(comment_id)
+    return redirect(url_for('commentPage', title=article_title))
 
 
 # @app.route('/categories/')
@@ -416,3 +449,68 @@ def leaderboard():
     other_users = [x[0] for x in user_scores[3:]]
 
     return render_template('users/leaderboard.html', podium_users=podium_users, other_users=other_users)
+
+@app.route('/media')
+def media():
+    return render_template('users/mediaPage.html')
+
+@app.route('/audio-page')
+def audio():
+    return render_template('users/audioPage.html')
+
+@app.route('/bookmarks')
+def bookmarks():
+    if 'user_id' not in session:
+        flash('You need to log in to view your bookmarks.')
+        return redirect(url_for('login'))  # Assuming you have a login route
+    
+    user_id = session['user_id']
+    bookmarks = Bookmark.query.filter_by(user_id=user_id).all()
+    
+    # Fetch the articles corresponding to the bookmarks
+    saved_articles = [Post.query.get(bookmark.post_id) for bookmark in bookmarks]
+    
+    return render_template('users/bookmark.html', saved_articles=saved_articles)
+
+@app.route('/bookmark/<int:post_id>', methods=['POST'])
+def bookmark_article(post_id):
+    # Ensure the user is logged in
+    if 'user_id' not in session:
+        flash("You must be logged in to bookmark an article.", "warning")
+        return redirect(url_for('userLogin'))
+
+    # Get the logged-in user ID
+    user_id = session['user_id']
+
+    # Check if the article is already bookmarked by the user
+    existing_bookmark = Bookmark.query.filter_by(user_id=user_id, post_id=post_id).first()
+    if existing_bookmark:
+        flash('You have already bookmarked this article.', 'warning')
+    else:
+        # Create a new bookmark entry
+        new_bookmark = Bookmark(user_id=user_id, post_id=post_id)
+        db.session.add(new_bookmark)
+        db.session.commit()
+        flash('Article bookmarked successfully!', 'success')
+
+    # Redirect back to the article page
+    article = Post.query.get_or_404(post_id)
+    return redirect(url_for('contentPage', title=article.title.replace(' ', '-')))
+
+@app.route('/remove_bookmark/<int:post_id>', methods=['POST'])
+def remove_bookmark(post_id):
+    if 'user_id' not in session:
+        flash('You need to log in to perform this action.')
+        return redirect(url_for('login'))  # Redirect to login if not logged in
+
+    user_id = session['user_id']
+    bookmark = Bookmark.query.filter_by(user_id=user_id, post_id=post_id).first()
+    
+    if bookmark:
+        db.session.delete(bookmark)
+        db.session.commit()
+        flash('Bookmark removed successfully.')
+    else:
+        flash('Bookmark not found.')
+
+    return redirect(url_for('bookmarks')) 

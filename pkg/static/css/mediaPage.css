@@ -1,0 +1,106 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto Mono", monospace;
+  list-style-type: none;
+}
+
+body {
+  background: linear-gradient(135deg, #0b0c10 0%, #1f2833 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.box {
+  width: 350px;
+  height: 350px;
+  background-color: #66fcf1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.box:hover {
+  transform: scale(1.08);
+  background-color: #45a29e;
+  box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.3);
+}
+
+.box a {
+  text-decoration: none;
+  color: #0b0c10;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 100px;
+  color: #0b0c10;
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 24px;
+}
+
+/* Back Button Styles */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #66fcf1;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #0b0c10;
+  font-weight: bold;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #45a29e;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .box {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+
+  .icon {
+    font-size: 80px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+}

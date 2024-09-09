@@ -27,6 +27,21 @@ main {
   padding-bottom: 60px;
 }
 
+.back-arrow {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #66fcf1;
+  cursor: pointer;
+  color: #0b0c10;
+  z-index: 999;
+  border: none;
+}
+
 /* Style the heading inside the main content */
 .catHeading {
   height: 40vh;

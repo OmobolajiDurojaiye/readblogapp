@@ -12,6 +12,11 @@
       content="Rēadmire is a dynamic blog web application for readers who seek and appreciate quality content. Discover thoughtful articles and insightful writing that you'll admire and enjoy. Join our community of passionate readers today."
     />
     <meta name="author" content="Omobolaji Durojaiye" />
+    <meta property="og:title" content="{{ article.title }} | Rēadmire" />
+    <meta property="og:description" content="{{ article.description }}" />
+    <meta property="og:image" content="{{ url_for('static', filename='uploads/' + article.cover_image_url) }}" />
+    <meta property="og:url" content="{{ url_for('contentPage', title=article.title, _external=True) }}" />
+    <meta property="og:type" content="article" />
     <title>{{ article.title }} | Rēadmire</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -112,6 +117,18 @@
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body>
+    <div class="flashMessageContainerDisplay">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <button onclick="history.back()" class="back-arrow">← Back</button>
     {#<p class="back-button">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
         <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
@@ -266,7 +283,7 @@
           <div class="category">
             <a href="/{{ article.category }}"> {{ article.category }} </a>
           </div>
-          <div class="view">
+          {#<div class="view">
             <div class="view">
               <p>
                 <svg
@@ -285,14 +302,27 @@
                 <span>{{ article.view_count }}</span>
               </p>
             </div>
-          </div>
+          </div>#}
           <div class="date">
             <p>Published: {{ article.created_at.strftime('%B %d, %Y') }}</p>
+            {#{% if article.updated_at %}
+            <p>Updated: {{ article.updated_at.strftime('%B %d, %Y') }}</p>
+            {%endif%}#}
           </div>
           <div class="comment">
             <button type="button" class="commentButton" title="Click to read all comments">
-              comments <span class="commentNumber">{{ comments|length }}</span>
+              comments <span class="commentNumber">{{ comments_numbers|length }}</span>
             </button>
+
+            {% if user %}
+            <form id="bookmark-form" action="{{ url_for('bookmark_article', post_id=article.id) }}" method="POST">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <button class="bookmark-btn" title="Save Article" type="submit">
+                  <img src="{{ url_for('static', filename='icons/bookmark.png') }}" alt="Bookmark Icon" class="bookmark-icon"/>
+              </button>
+            </form>            
+            {%endif%}
+            
           </div>
           {#
           <div class="hook">
@@ -390,12 +420,12 @@
             />
           </a>
           <a
-            href="https://www.linkedin.com/shareArticle?mini=true&url={{ url_for('contentPage', title=article.title, _external=True) }}&title={{ article.title }}&summary={{ article.content[:200] }}&source=LinkedIn"
+            href="https://api.whatsapp.com/send?text={{ article.title }} - {{ url_for('contentPage', title=article.title, _external=True) }}"
             target="_blank"
           >
             <img
               src="{{ url_for('static', filename='icons/whatsapp.png') }}"
-              alt="LinkedIn"
+              alt="WhatsApp"
             />
           </a>
           {#<a
@@ -427,11 +457,19 @@
         <div class="comments-section">
           {% for comment in comments %}
           <div class="comment-item">
-            <img 
-              src="{{ url_for('static', filename='uploads/' + comment.user.profile_picture) }}" 
-              alt="{{ comment.user.name }}" 
-              class="comment-profile-picture"
-            />
+            {% if comment.user.profile_picture %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + comment.user.profile_picture) }}"
+            alt="Profile Picture"
+            class="comment-profile-picture"
+          />
+          {% else %}
+          <img
+            src="{{url_for('static', filename='icons/profile.png')}}"
+            alt="Profile Icon"
+            class="comment-profile-picture"
+          />
+          {%endif%}
             <div class="comment-content">
               <p class="comment-name">{{ comment.user.name }}</p>
               {#<p class="comment-text">{{ comment.comment }}</p>#}
@@ -559,8 +597,6 @@
     });
   });
   </script>
-  
-    
-    
+  <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
   </body>
 </html>

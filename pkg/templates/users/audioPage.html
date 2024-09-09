@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Podcast Page</title>
+    <style>
+      /* Default play button */
+      .play-pause.playing {
+        background-image: url("{{url_for('static', filename='icons/play.png')}}");
+      }
+
+      /* Pause button when playing */
+      .play-pause.paused {
+        background-image: url("{{url_for('static', filename='icons/pause.png')}}");
+      }
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/audioPage.css')}}"
+      type="text/css"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+    />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <div class="header">
+      <button class="go-back" onclick="history.back()">Go Back</button>
+      <img
+        src="{{url_for('static', filename='images/header-image.png')}}"
+        alt="Header Image"
+        class="header-image"
+      />
+      <h1>Articles Audio Explanations</h1>
+    </div>
+
+    <!-- Date Section for September 2024 -->
+    <div class="date-section">
+      <div class="date-header">September 2024</div>
+      <div class="podcast-grid">
+        <div class="podcast-card">
+          <img
+            src="{{url_for('static', filename='images/Readmire Cover Image.jpg')}}"
+            alt="Podcast Thumbnail"
+          />
+          <div class="podcast-title">Episode 1: Rēadmire is born</div>
+
+          <div class="audio-player">
+            <div class="play-pause playing" onclick="togglePlay(this)"></div>
+            <div class="progress-bar" onclick="setProgress(event)">
+              <div class="progress"></div>
+            </div>
+            <div class="volume-control">
+              <i class="fas fa-volume-up"></i>
+              <div class="volume-bar" onclick="setVolume(event)">
+                <div class="volume-level"></div>
+              </div>
+            </div>
+            <audio id="audio1">
+              <source
+                src="{{url_for('static', filename='audios/town-10169.aac')}}"
+                type="audio/mpeg"
+              />
+            </audio>
+          </div>
+
+          <div class="description">
+            Get to know what Rēadmire is about from our founder - Bolaji.
+          </div>
+        </div>
+
+        <div class="podcast-card">
+          <img
+            src="{{url_for('static', filename='images/Rlogo.jpeg')}}"
+            alt="Podcast Thumbnail"
+          />
+          <div class="podcast-title">Episode 2: A little music</div>
+
+          <div class="audio-player">
+            <div class="play-pause playing" onclick="togglePlay(this)"></div>
+            <div class="progress-bar" onclick="setProgress(event)">
+              <div class="progress"></div>
+            </div>
+            <div class="volume-control">
+              <i class="fas fa-volume-up"></i>
+              <div class="volume-bar" onclick="setVolume(event)">
+                <div class="volume-level"></div>
+              </div>
+            </div>
+            <audio id="audio1">
+              <source
+                src="{{url_for('static', filename='audios/Morbius.mp3')}}"
+                type="audio/mpeg"
+              />
+            </audio>
+          </div>
+
+          <div class="description">
+            Enjoy a little bit of music made by Rēadmire Boss
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function togglePlay(button) {
+        const audio = button.parentElement.querySelector("audio");
+
+        if (audio.paused) {
+          audio.play();
+          button.classList.remove("playing");
+          button.classList.add("paused");
+        } else {
+          audio.pause();
+          button.classList.remove("paused");
+          button.classList.add("playing");
+        }
+
+        audio.ontimeupdate = function () {
+          const progressBar =
+            button.nextElementSibling.querySelector(".progress");
+          progressBar.style.width =
+            (audio.currentTime / audio.duration) * 100 + "%";
+        };
+      }
+
+      function setProgress(event) {
+        const progressBar = event.currentTarget;
+        const audio = progressBar.parentElement.querySelector("audio");
+        const width = progressBar.clientWidth;
+        const clickX = event.offsetX;
+        const duration = audio.duration;
+
+        audio.currentTime = (clickX / width) * duration;
+      }
+
+      function setVolume(event) {
+        const volumeBar = event.currentTarget;
+        const audio =
+          volumeBar.parentElement.parentElement.querySelector("audio");
+        const width = volumeBar.clientWidth;
+        const clickX = event.offsetX;
+        const volumeLevel = clickX / width;
+
+        audio.volume = volumeLevel;
+        volumeBar.querySelector(".volume-level").style.width =
+          volumeLevel * 100 + "%";
+      }
+    </script>
+
+    <!-- Add FontAwesome for icons -->
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
