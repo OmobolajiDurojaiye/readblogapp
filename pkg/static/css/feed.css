@@ -12,6 +12,29 @@ body {
   color: #fff !important;
 }
 
+/* Flash message container */
+.flashMessageContainerDisplay {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #66fcf1;
+  color: #0b0c10;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  z-index: 9999;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Flash message individual style */
+.flash-message {
+  font-size: 0.8em;
+}
+
 .article-content {
   color: #0b0c10 !important;
 }

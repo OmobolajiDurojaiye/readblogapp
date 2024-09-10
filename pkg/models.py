@@ -61,11 +61,14 @@ class Comment(db.Model):
     comment = db.Column(db.Text, nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    parent_comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)  # New field to link responses to comments
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref='comments')
     post = db.relationship('Post', backref='comments')
-    likes = db.relationship('Like', backref='comment_like', cascade="all, delete-orphan")  # Changed backref name
+    parent_comment = db.relationship('Comment', remote_side=[id], backref='responses')  # Self-referencing for responses
+    likes = db.relationship('Like', backref='comment_like', cascade="all, delete-orphan")
+
 
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,3 +78,12 @@ class Like(db.Model):
 
     user = db.relationship('User', backref='likes')
     comment = db.relationship('Comment', backref='likes_on_comment')  # Changed backref name
+
+class Podcast(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    cover_image_url = db.Column(db.String(255), nullable=False)
+    audio_file_url = db.Column(db.String(255), nullable=False)
+    episode_number = db.Column(db.Integer, nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)

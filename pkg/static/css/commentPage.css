@@ -187,6 +187,73 @@ body {
   margin-right: 5px;
 }
 
+/* Response Section Styling */
+.responses {
+  background-color: #1f2833;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  max-height: 300px; /* Limit height to 200px */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+.response-box {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #45a29e;
+  border-radius: 8px;
+}
+
+.response-box .profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.response-content {
+  background-color: #0b0c10;
+  border-radius: 8px;
+  padding: 10px;
+  flex: 1;
+}
+
+.response-header .username {
+  font-weight: bold;
+  color: #66fcf1;
+  margin-bottom: 5px;
+}
+
+.response-body {
+  margin-bottom: 5px;
+  color: #c5c6c7;
+}
+
+.response-footer .time {
+  font-size: 0.8em;
+  color: #c5c6c7;
+}
+
+/* Scrollbar styling for modern look */
+.responses::-webkit-scrollbar {
+  width: 8px;
+}
+
+.responses::-webkit-scrollbar-track {
+  background: #0b0c10;
+}
+
+.responses::-webkit-scrollbar-thumb {
+  background: #66fcf1;
+  border-radius: 10px;
+}
+
+.responses::-webkit-scrollbar-thumb:hover {
+  background: #45a29e;
+}
+
 .input-group {
   display: flex;
   align-items: center;

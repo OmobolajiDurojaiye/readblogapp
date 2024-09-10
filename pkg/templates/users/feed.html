@@ -178,6 +178,18 @@
         </div>
       </div>
 
+      {%if user%}
+      <div class="navigator-item" id="profile">
+        <a href="/media">
+          <img
+            src="{{url_for('static', filename='icons/media.png')}}"
+            alt="home Icon"
+          />
+          <p>Media</p>
+        </a>
+      </div>
+      {%endif%}
+
       <div class="navigator-item" id="profile">
         {% if user %}
         <a href="{{ url_for('profile', username=user.name) }}">

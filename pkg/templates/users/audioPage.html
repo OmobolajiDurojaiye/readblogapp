@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Podcast Page</title>
+    <title>Podcasts | Rēadmire</title>
     <style>
       /* Default play button */
       .play-pause.playing {
@@ -30,13 +30,13 @@
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="{{url_for('static', filename='/apple-icon-180x180.png')}}"
+      href="{{url_for('static', filename='apple-icon-180x180.png')}}"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
-      href="{{url_for('static', filename='/android-icon-192x192.png')}}"
+      href="{{url_for('static', filename='android-icon-192x192.png')}}"
     />
     <meta name="theme-color" content="#ffffff" />
   </head>
@@ -51,17 +51,31 @@
       <h1>Articles Audio Explanations</h1>
     </div>
 
-    <!-- Date Section for September 2024 -->
-    <div class="date-section">
-      <div class="date-header">September 2024</div>
-      <div class="podcast-grid">
+    {% if podcasts %}
+      <!-- Loop through podcasts by month -->
+      {% set current_month = None %}
+      {% for podcast in podcasts %}
+        {% set podcast_month = podcast.uploaded_at.strftime('%B %Y') %}
+        {% if podcast_month != current_month %}
+          {% if current_month is not none %}
+            </div> <!-- Close previous month section -->
+          {% endif %}
+          <div class="date-section">
+            <div class="date-header">{{ podcast_month }}</div>
+            <div class="podcast-grid">
+          {% set current_month = podcast_month %}
+        {% endif %}
         <div class="podcast-card">
           <img
-            src="{{url_for('static', filename='images/Readmire Cover Image.jpg')}}"
+            src="{{ url_for('static', filename='uploads/' + podcast.cover_image_url) }}"
             alt="Podcast Thumbnail"
           />
-          <div class="podcast-title">Episode 1: Rēadmire is born</div>
-
+          <div class="podcast-title">
+            Episode {{ podcast.episode_number }}: {{ podcast.title }}
+          </div>
+          <div class="podcast-date">
+            Posted on {{ podcast.uploaded_at.strftime('%d %B %Y') }}
+          </div>
           <div class="audio-player">
             <div class="play-pause playing" onclick="togglePlay(this)"></div>
             <div class="progress-bar" onclick="setProgress(event)">
@@ -73,51 +87,23 @@
                 <div class="volume-level"></div>
               </div>
             </div>
-            <audio id="audio1">
+            <audio id="audio{{ podcast.id }}">
               <source
-                src="{{url_for('static', filename='audios/town-10169.aac')}}"
+                src="{{ url_for('static', filename='audios/' + podcast.audio_file_url) }}"
                 type="audio/mpeg"
               />
             </audio>
           </div>
-
-          <div class="description">
-            Get to know what Rēadmire is about from our founder - Bolaji.
-          </div>
+          <div class="description">{{ podcast.description }}</div>
         </div>
-
-        <div class="podcast-card">
-          <img
-            src="{{url_for('static', filename='images/Rlogo.jpeg')}}"
-            alt="Podcast Thumbnail"
-          />
-          <div class="podcast-title">Episode 2: A little music</div>
-
-          <div class="audio-player">
-            <div class="play-pause playing" onclick="togglePlay(this)"></div>
-            <div class="progress-bar" onclick="setProgress(event)">
-              <div class="progress"></div>
-            </div>
-            <div class="volume-control">
-              <i class="fas fa-volume-up"></i>
-              <div class="volume-bar" onclick="setVolume(event)">
-                <div class="volume-level"></div>
-              </div>
-            </div>
-            <audio id="audio1">
-              <source
-                src="{{url_for('static', filename='audios/Morbius.mp3')}}"
-                type="audio/mpeg"
-              />
-            </audio>
-          </div>
-
-          <div class="description">
-            Enjoy a little bit of music made by Rēadmire Boss
-          </div>
-        </div>
+      {% endfor %}
+      </div> <!-- Close the last month section -->
+    {% else %}
+      <div class="no-podcasts">
+        <h2>No podcasts available at the moment.</h2>
       </div>
-    </div>
+    {% endif %}
+
 
     <script>
       function togglePlay(button) {

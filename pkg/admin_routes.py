@@ -3,22 +3,20 @@ from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from pkg import app, mail
-from pkg.models import db, Admin, Post, Subscriber
+from pkg.models import db, Admin, Post, Subscriber, Podcast
 from flask_mail import Message
 
-# Custom errors
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('page404.html')
-
-
+# Define the upload folders and allowed file types
 UPLOAD_FOLDER = 'pkg/static/uploads/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+AUDIO_FOLDER = 'pkg/static/audios/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp3', 'wav', 'ogg', 'aac'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['AUDIO_FOLDER'] = AUDIO_FOLDER
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+# Function to check allowed file extensions
+def allowed_file(filename, allowed_set=ALLOWED_EXTENSIONS):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_set
 
     
 @app.route('/admin/login/', methods=['GET', 'POST'])
@@ -316,3 +314,65 @@ def send_announcement():
         flash('Announcement sent to all subscribers!')
         return redirect(url_for('send_announcement'))
     return render_template('admin/announcement.html')
+
+
+@app.route('/admin/audio-room/', methods=['GET', 'POST'])
+def upload_podcast():
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        cover_image = request.files.get('cover_image')
+        audio_file = request.files.get('audio_file')
+
+        # Ensure both files are provided
+        if not cover_image or not audio_file:
+            flash('Both cover image and audio file are required!', 'danger')
+            return redirect(url_for('upload_podcast'))
+
+        # Check for valid file extensions
+        if not allowed_file(cover_image.filename) or not allowed_file(audio_file.filename):
+            flash('Invalid file type for cover image or audio file', 'danger')
+            return redirect(url_for('upload_podcast'))
+
+        # Secure filenames
+        cover_image_filename = secure_filename(cover_image.filename)
+        audio_file_filename = secure_filename(audio_file.filename)
+
+        # # Ensure directories exist
+        # if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        #     os.makedirs(app.config['UPLOAD_FOLDER'])
+        # if not os.path.exists(app.config['AUDIO_FOLDER']):
+        #     os.makedirs(app.config['AUDIO_FOLDER'])
+
+        # Save the files
+        cover_image.save(os.path.join(app.config['UPLOAD_FOLDER'], cover_image_filename))
+        audio_file.save(os.path.join(app.config['AUDIO_FOLDER'], audio_file_filename))
+
+        # Calculate the episode number (count of existing podcasts + 1)
+        episode_number = Podcast.query.count() + 1
+
+        # Create new podcast entry
+        new_podcast = Podcast(
+            title=f'{title} - Episode {episode_number}',
+            description=description,
+            cover_image_url=cover_image_filename,
+            audio_file_url=audio_file_filename,
+            episode_number=episode_number
+        )
+
+        # Add to the database
+        try:
+            db.session.add(new_podcast)
+            db.session.commit()
+            flash('Podcast uploaded successfully!', 'success')
+        except Exception as e:
+            db.session.rollback()  # Rollback if there is any error
+            flash(f'Error uploading podcast: {str(e)}', 'danger')
+            return redirect(url_for('upload_podcast'))
+
+        return redirect(url_for('upload_podcast'))
+
+    return render_template('admin/audioRoom.html')

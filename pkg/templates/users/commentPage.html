@@ -178,14 +178,74 @@
 
               <!-- Display Liked Users -->
               <div class="liked-users">
-                {% for like in comment.likes %}
+                {% for like in comment.likes %} {%if like.user.profile_picture%}
                 <img
                   src="{{ url_for('static', filename='uploads/' + like.user.profile_picture) }}"
                   alt="Liked User"
                   class="liked-user-pic"
                 />
+                {%else%}
+                <img
+                  src="{{ url_for('static', filename='icons/profile.png') }}"
+                  alt="Liked User"
+                  class="liked-user-pic"
+                />
+                {%endif%} {% endfor %}
+              </div>
+
+              <!--Response input to every comments-->
+              <form
+                action="{{ url_for('respond_to_comment', comment_id=comment.id) }}"
+                method="POST"
+                style="margin: 3vh 0"
+              >
+                <input
+                  type="hidden"
+                  name="csrf_token"
+                  value="{{ csrf_token() }}"
+                />
+                <div class="input-group">
+                  <textarea
+                    name="comment"
+                    class="form-control"
+                    rows="1"
+                    placeholder="Respond to {{ comment.user.name }}"
+                    required
+                  ></textarea>
+                  <button type="submit" class="btn btn-send">
+                    <img
+                      src="{{ url_for('static', filename='icons/send-icon.png') }}"
+                      alt="Send"
+                    />
+                  </button>
+                </div>
+              </form>
+
+              {% if comment.responses %}
+              <div class="responses">
+                {% for response in comment.responses %}
+                <div class="response-box">
+                  <img
+                    src="{{ url_for('static', filename='uploads/' + response.user.profile_picture) }}"
+                    alt="Profile Picture"
+                    class="profile-pic"
+                  />
+                  <div class="response-content">
+                    <div class="response-header">
+                      <span class="username">{{ response.user.name }}</span>
+                    </div>
+                    <div class="response-body">{{ response.comment }}</div>
+                    <div class="response-footer">
+                      <span class="time"
+                        >{{ response.created_at.strftime('%B %d, %Y, %I:%M %p')
+                        }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
                 {% endfor %}
               </div>
+              {% endif %}
             </div>
           </div>
         </div>

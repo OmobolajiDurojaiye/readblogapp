@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 from pkg import app
-from pkg.models import db, Post, Subscriber, Comment, User, Bookmark, Like
+from pkg.models import db, Post, Subscriber, Comment, User, Bookmark, Like, Podcast
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 UPLOAD_FOLDER = 'static/uploads/'
@@ -118,7 +118,7 @@ def userLogin():
         if user and user.check_password(password):
             session['user_id'] = user.id
             flash('Logged in successfully!')
-            return redirect(url_for('profile', username=user.name))
+            return redirect(url_for('feed', username=user.name))
         else:
             flash('Login failed. Please check your email and password.')
 
@@ -341,6 +341,29 @@ def like_comment(comment_id):
     article_title = get_article_by_comment_id(comment_id)
     return redirect(url_for('commentPage', title=article_title))
 
+@app.route('/comment/<int:comment_id>/respond', methods=['POST'])
+def respond_to_comment(comment_id):
+    if 'user_id' not in session:
+        flash('You need to be logged in to respond to comments.', 'warning')
+        return redirect(url_for('userLogin'))
+
+    parent_comment = Comment.query.get_or_404(comment_id)
+    comment_text = request.form['comment']
+
+    new_comment = Comment(
+        comment=comment_text,
+        article_id=parent_comment.article_id,  # Keep the same article ID
+        user_id=session['user_id'],  # Get current logged-in user ID
+        parent_comment_id=comment_id  # Set the parent comment ID
+    )
+
+    db.session.add(new_comment)
+    db.session.commit()
+
+    flash('Your response has been posted.', 'success')
+    return redirect(url_for('commentPage', title=parent_comment.post.title.replace(' ', '-')))
+
+
 
 # @app.route('/categories/')
 # def categories():
@@ -456,7 +479,13 @@ def media():
 
 @app.route('/audio-page')
 def audio():
-    return render_template('users/audioPage.html')
+    podcasts = Podcast.query.order_by(Podcast.uploaded_at.desc()).all()
+    return render_template('users/audioPage.html', podcasts=podcasts)
+
+@app.route('/video-page')
+def video():
+    return render_template('users/videoPage.html')
+
 
 @app.route('/bookmarks')
 def bookmarks():
@@ -465,7 +494,7 @@ def bookmarks():
         return redirect(url_for('login'))  # Assuming you have a login route
     
     user_id = session['user_id']
-    bookmarks = Bookmark.query.filter_by(user_id=user_id).all()
+    bookmarks = Bookmark.query.filter_by(user_id=user_id).order_by(Bookmark.created_at.desc()).all()
     
     # Fetch the articles corresponding to the bookmarks
     saved_articles = [Post.query.get(bookmark.post_id) for bookmark in bookmarks]
