@@ -165,7 +165,7 @@ def feed():
 
 @app.route('/user-profile/<username>/')
 def profile(username):
-    if 'user_id' not in session:
+    if 'user_id' not in session and request.method == 'GET':
         flash('Please log in to access your profile.')
         return redirect(url_for('userLogin'))
 
@@ -475,23 +475,27 @@ def leaderboard():
 
 @app.route('/media')
 def media():
+    if 'user_id' not in session:
+        flash('You need to log in to access the media.')
+        return redirect(url_for('userLogin')) 
+    
     return render_template('users/mediaPage.html')
 
 @app.route('/audio-page')
 def audio():
+    if 'user_id' not in session:
+        flash('You need to log in to access podcasts.')
+        return redirect(url_for('userLogin')) 
+    
     podcasts = Podcast.query.order_by(Podcast.uploaded_at.desc()).all()
     return render_template('users/audioPage.html', podcasts=podcasts)
-
-@app.route('/video-page')
-def video():
-    return render_template('users/videoPage.html')
 
 
 @app.route('/bookmarks')
 def bookmarks():
     if 'user_id' not in session:
         flash('You need to log in to view your bookmarks.')
-        return redirect(url_for('login'))  # Assuming you have a login route
+        return redirect(url_for('userLogin'))  # Assuming you have a login route
     
     user_id = session['user_id']
     bookmarks = Bookmark.query.filter_by(user_id=user_id).order_by(Bookmark.created_at.desc()).all()
@@ -530,7 +534,7 @@ def bookmark_article(post_id):
 def remove_bookmark(post_id):
     if 'user_id' not in session:
         flash('You need to log in to perform this action.')
-        return redirect(url_for('login'))  # Redirect to login if not logged in
+        return redirect(url_for('userLogin'))  # Redirect to login if not logged in
 
     user_id = session['user_id']
     bookmark = Bookmark.query.filter_by(user_id=user_id, post_id=post_id).first()

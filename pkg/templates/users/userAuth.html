@@ -182,6 +182,27 @@
           this.textContent = type === "password" ? "Show" : "Hide";
         });
     </script>
+    <script>
+      // Function to refresh the page
+      function refreshPage() {
+        location.reload();
+      }
+
+      // Set timer for 10 minutes (600000 milliseconds)
+      let inactivityTime = setTimeout(refreshPage, 600000);
+
+      // Reset the timer whenever user interacts
+      function resetTimer() {
+        clearTimeout(inactivityTime);
+        inactivityTime = setTimeout(refreshPage, 600000); // Start the timer again
+      }
+
+      // Detect user activity (keypress, mousemove, click)
+      document.addEventListener("keypress", resetTimer);
+      document.addEventListener("mousemove", resetTimer);
+      document.addEventListener("click", resetTimer);
+    </script>
+
     <script src="{{url_for('static', filename='scripts/flash.js')}}"></script>
   </body>
 </html>
